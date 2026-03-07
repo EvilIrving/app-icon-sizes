@@ -14,6 +14,8 @@
 - 图片集，支持 1x/2x/3x 或 1x/2x/3x/4x 缩放
 - Chrome 扩展图标
 
+![Icon Maker 截图](zh.png)
+
 ## 平台详情
 
 ### iOS 和 macOS
