@@ -4,6 +4,10 @@
     <clipPath id="roundedClip">
       <rect width="1024" height="1024" rx="192" ry="192"/>
     </clipPath>
+    <!-- Rounded clip for scaled content so the dark container keeps rounded corners -->
+    <clipPath id="roundedClipInner">
+      <rect width="1024" height="1024" rx="192" ry="192"/>
+    </clipPath>
 
     <!-- Background radial gradient -->
     <radialGradient id="bgGrad" cx="40%" cy="40%" r="75%">
@@ -65,6 +69,8 @@
   </defs>
 
   <g clip-path="url(#roundedClip)">
+  <!-- Outer margin: whole design (background + content) scaled and centered so the dark container has padding from icon edge; clip to keep rounded corners -->
+  <g clip-path="url(#roundedClipInner)" transform="translate(512,512) scale(0.86) translate(-512,-512)">
   <!-- ── Background ─────────────────────────────────────── -->
   <rect width="1024" height="1024" fill="url(#bgGrad)"/>
 
@@ -75,8 +81,8 @@
   </radialGradient>
   <rect width="1024" height="1024" fill="url(#vignette)"/>
 
-  <!-- Logo mark: scaled to ~82% so icon has safe-area padding and matches other app icons visually -->
-  <g transform="translate(512,512) scale(0.82) translate(-512,-512)">
+  <!-- Content group: inner padding so graphic doesn't touch the dark container -->
+  <g transform="translate(512,512) scale(0.78) translate(-512,-512)">
   <!-- ── Square 1 — large, anchored center ──────────────── -->
   <!-- Glow halo behind sq1 -->
   <rect x="242" y="242" width="540" height="540" rx="88"
@@ -118,6 +124,7 @@
   <!-- ── Subtle noise overlay on the whole mark ─────────── -->
   <rect x="242" y="242" width="540" height="540" rx="88"
         fill="white" opacity="0.015" filter="url(#noise)"/>
+  </g>
   </g>
   </g>
 
