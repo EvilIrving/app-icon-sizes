@@ -93,7 +93,6 @@ jobs:
             dist-windows/**/*.msi
             dist-windows/**/*.exe
             dist-macos/**/*.dmg
-            dist-macos/**/*.app
           generate_release_notes: true
           draft: false
           prerelease: false
