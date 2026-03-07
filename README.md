@@ -2,6 +2,8 @@
 
 A desktop app that generates app icons for multiple platforms from a single source image. Built with Tauri, React, and TypeScript.
 
+**[🇨🇳 中文版本](README.zh-CN.md)**
+
 ## What it does
 
 Drop in a 1024×1024 PNG, pick your target platforms, and get back a ZIP with all the sizes you need. No web service, no uploading to sketchy websites—runs locally on your machine.
