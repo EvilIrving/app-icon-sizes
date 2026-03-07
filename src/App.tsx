@@ -21,6 +21,8 @@ import {
 } from './core';
 import { resizeImage, blobToArrayBuffer } from './core';
 import { saveZipWithDialog } from './core';
+import { useI18n } from './i18n';
+import { LanguageSwitcher } from './i18n';
 import './App.css';
 
 type AppMode = 'icons' | 'imagesets' | 'custom';
@@ -38,6 +40,7 @@ const ALL_PLATFORMS: { id: string; preset: PlatformPreset }[] = PRESETS
   .map(p => ({ id: p.id, preset: p }));
 
 export default function App() {
+  const { t } = useI18n();
   const [sourceImage, setSourceImage] = useState<Blob | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const previewBlobUrlRef = useRef<string | null>(null);
@@ -368,7 +371,7 @@ export default function App() {
           try {
             const { isPermissionGranted, requestPermission, sendNotification } = await import('@tauri-apps/plugin-notification');
             if (!(await isPermissionGranted())) await requestPermission();
-            sendNotification({ title: 'Icon Maker', body: '导出完成，已打开所在文件夹' });
+            sendNotification({ title: t('appTitle'), body: t('exportSuccessBody') });
           } catch (_) { /* notification not available */ }
         }
       }
@@ -384,12 +387,12 @@ export default function App() {
 
   const renderSummary = () => {
     if (mode === 'icons') {
-      return <>{selectedPresets.length} platform{selectedPresets.length !== 1 ? 's' : ''} · <strong>{totalCount}</strong> sizes</>;
+      return <>{selectedPresets.length} {selectedPresets.length !== 1 ? t('platforms') : t('platform')} · <strong>{totalCount}</strong> {t('sizes')}</>;
     }
     if (mode === 'imagesets') {
-      return <><strong>{totalCount}</strong> images</>;
+      return <><strong>{totalCount}</strong> {t('images')}</>;
     }
-    return <><strong>{customSizes.length}</strong> sizes</>;
+    return <><strong>{customSizes.length}</strong> {t('sizes')}</>;
   };
 
   const getIconFilename = (size: { name: string; scale?: string; density?: string }, preset: PlatformPreset) => {
@@ -406,9 +409,14 @@ export default function App() {
     <div className="app">
       <aside className="sidebar">
         <div className="sidebar-scroll">
+          {/* Language Switcher - Top */}
+          <LanguageSwitcher />
+
+          <div className="sb-divider" />
+
           {/* Source */}
           <div>
-            <div className="sb-label">SOURCE</div>
+            <div className="sb-label">{t('source')}</div>
             <div
               className={`source-zone${dragOver ? ' drag-over' : ''}${imagePreview ? ' has-image' : ''}`}
               onDrop={handleDrop}
@@ -425,7 +433,7 @@ export default function App() {
                     <div className="source-dims">
                       {imageDimensions?.width} × {imageDimensions?.height}
                     </div>
-                    <div className="source-change">Click to change</div>
+                    <div className="source-change">{t('clickToChange')}</div>
                   </div>
                 </div>
               ) : (
@@ -435,8 +443,8 @@ export default function App() {
                     <circle cx="8.5" cy="8.5" r="1.5" />
                     <path d="m21 15-5-5L5 21" />
                   </svg>
-                  <p>Drop image here</p>
-                  <p className="hint">支持 PNG、SVG 等，拖入或点击选择</p>
+                  <p>{t('dropImage')}</p>
+                  <p className="hint">{t('supportedFormats')}</p>
                 </div>
               )}
             </div>
@@ -452,9 +460,9 @@ export default function App() {
           {/* Mode */}
           <div>
             <div className="segmented">
-              <button className={`seg${mode === 'icons' ? ' active' : ''}`} onClick={() => setMode('icons')}>App Icons</button>
-              <button className={`seg${mode === 'imagesets' ? ' active' : ''}`} onClick={() => setMode('imagesets')}>Image Sets</button>
-              <button className={`seg${mode === 'custom' ? ' active' : ''}`} onClick={() => setMode('custom')}>Custom</button>
+              <button className={`seg${mode === 'icons' ? ' active' : ''}`} onClick={() => setMode('icons')}>{t('modeIcons')}</button>
+              <button className={`seg${mode === 'imagesets' ? ' active' : ''}`} onClick={() => setMode('imagesets')}>{t('modeImageSets')}</button>
+              <button className={`seg${mode === 'custom' ? ' active' : ''}`} onClick={() => setMode('custom')}>{t('modeCustom')}</button>
             </div>
           </div>
 
@@ -464,7 +472,7 @@ export default function App() {
           {mode === 'icons' && (
             <>
               <div>
-                <div className="sb-label">PLATFORMS</div>
+                <div className="sb-label">{t('platformsLabel')}</div>
                 <div className="platform-list">
                   {ALL_PLATFORMS.map(({ id, preset }) => (
                     <label
@@ -486,7 +494,7 @@ export default function App() {
 
               {selectedPlatforms.has('android') && (
                 <div>
-                  <div className="sb-label">ANDROID FILENAME</div>
+                  <div className="sb-label">{t('androidFilename')}</div>
                   <input
                     type="text"
                     className="text-input"
@@ -504,7 +512,7 @@ export default function App() {
           {mode === 'imagesets' && (
             <>
               <div>
-                <div className="sb-label">PLATFORMS</div>
+                <div className="sb-label">{t('platformsLabel')}</div>
                 <div className="platform-list">
                   {['ios', 'android'].map((id) => (
                     <label
@@ -528,13 +536,11 @@ export default function App() {
                     </label>
                   ))}
                 </div>
-                <div className="hint-text mt-6">
-                  iOS: ios/ (1x, @2x, @3x). Android: drawable-*dpi (1x, 1.5x, 2x, 3x)
-                </div>
+                <div className="hint-text mt-6">{t('imageSetsHint')}</div>
               </div>
 
               <div>
-                <div className="sb-label">FILENAME</div>
+                <div className="sb-label">{t('filename')}</div>
                 <input
                   type="text"
                   className="text-input"
@@ -551,9 +557,9 @@ export default function App() {
             <>
               <div>
                 <div className="sb-label-row">
-                  <div className="sb-label">SIZES</div>
+                  <div className="sb-label">{t('sizesLabel')}</div>
                   {customSizes.length > 0 && (
-                    <button className="link-btn" onClick={clearCustomSizes}>Clear all</button>
+                    <button className="link-btn" onClick={clearCustomSizes}>{t('clearAll')}</button>
                   )}
                 </div>
 
@@ -602,7 +608,7 @@ export default function App() {
 
                 <div className="size-list">
                   {customSizes.length === 0 ? (
-                    <div className="size-list-empty">No sizes added</div>
+                    <div className="size-list-empty">{t('noSizesAdded')}</div>
                   ) : (
                     customSizes.map(s => (
                       <div key={s.id} className="size-row">
@@ -615,7 +621,7 @@ export default function App() {
               </div>
 
               <div>
-                <div className="sb-label">OUTPUT FILENAME</div>
+                <div className="sb-label">{t('outputFilename')}</div>
                 <input
                   type="text"
                   className="text-input"
@@ -633,7 +639,7 @@ export default function App() {
         <div className="sidebar-footer">
           <div className="export-summary">{renderSummary()}</div>
           <button className="export-btn" disabled={!canExport} onClick={handleExport}>
-            {isExporting ? 'Exporting…' : 'Export'}
+            {isExporting ? t('exporting') : t('export')}
           </button>
           {isExporting && exportProgress && (
             <div className="export-progress">
@@ -643,7 +649,7 @@ export default function App() {
               <div className="progress-text">{exportProgress.current}/{exportProgress.total}</div>
             </div>
           )}
-          {exportComplete && <div className="export-success">Export complete</div>}
+          {exportComplete && <div className="export-success">{t('exportComplete')}</div>}
         </div>
       </aside>
 
@@ -656,16 +662,16 @@ export default function App() {
               <circle cx="8.5" cy="8.5" r="1.5" />
               <path d="m21 15-5-5L5 21" />
             </svg>
-            <h3>No image selected</h3>
-            <p>Upload a source image to preview generated icons</p>
+            <h3>{t('noImageSelected')}</h3>
+            <p>{t('uploadImageHint')}</p>
           </div>
         )}
 
         {/* App Icons preview */}
         {sourceImage && mode === 'icons' && selectedPresets.length === 0 && (
           <div className="empty-state">
-            <h3>No platforms selected</h3>
-            <p>Select platforms from the sidebar to preview</p>
+            <h3>{t('noPlatformsSelected')}</h3>
+            <p>{t('selectPlatformsHint')}</p>
           </div>
         )}
 
@@ -675,7 +681,7 @@ export default function App() {
               <div key={preset.id}>
                 <div className="group-header">
                   <h3>{preset.name}</h3>
-                  <span className="group-count">{preset.sizes.length} sizes</span>
+                  <span className="group-count">{preset.sizes.length} {t('sizes')}</span>
                 </div>
                 <div className="preview-grid">
                   {preset.sizes.map((size, i) => {
@@ -705,8 +711,8 @@ export default function App() {
           <div className="preview-groups">
             <div>
               <div className="group-header">
-                <h3>Image Sets</h3>
-                <span className="group-count">{imageSetPreviewItems.length} images</span>
+                <h3>{t('imageSets')}</h3>
+                <span className="group-count">{imageSetPreviewItems.length} {t('images')}</span>
               </div>
               {imageSetPreviewItems.length > 0 ? (
                 <div className="preview-grid">
@@ -722,7 +728,7 @@ export default function App() {
                 </div>
               ) : (
                 <div className="empty-state" style={{ minHeight: 200 }}>
-                  <p>Select iOS and/or Android and upload an image</p>
+                  <p>{t('selectPlatformHint')}</p>
                 </div>
               )}
             </div>
@@ -732,8 +738,8 @@ export default function App() {
         {/* Custom Sizes preview */}
         {sourceImage && mode === 'custom' && customSizes.length === 0 && (
           <div className="empty-state">
-            <h3>No sizes defined</h3>
-            <p>Add sizes from the sidebar to preview</p>
+            <h3>{t('noSizesDefined')}</h3>
+            <p>{t('addSizesHint')}</p>
           </div>
         )}
 
@@ -741,8 +747,8 @@ export default function App() {
           <div className="preview-groups">
             <div>
               <div className="group-header">
-                <h3>Custom Sizes</h3>
-                <span className="group-count">{customSizes.length} sizes</span>
+                <h3>{t('customSizes')}</h3>
+                <span className="group-count">{customSizes.length} {t('sizes')}</span>
               </div>
               <div className="preview-grid">
                 {customSizes.map(s => (
