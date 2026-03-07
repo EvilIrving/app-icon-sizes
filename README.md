@@ -1,65 +1,56 @@
 # Icon Maker
 
-A cross-platform desktop application for generating app icons for multiple platforms. Built with Tauri, React, and TypeScript.
+A desktop app that generates app icons for multiple platforms from a single source image. Built with Tauri, React, and TypeScript.
 
-## Features
+## What it does
 
-- **Multi-platform Support**: Generate icons for iOS, macOS, Android, Chrome Extension, and custom image sets
-- **Simple Workflow**: Select an image → Choose platform → Export
-- **High Quality**: Uses Canvas API with high-quality image smoothing
-- **Native Experience**: Built with Tauri for small bundle size and native performance
-- **Customizable**: Support for custom filenames and scale presets
+Drop in a 1024×1024 PNG, pick your target platforms, and get back a ZIP with all the sizes you need. No web service, no uploading to sketchy websites—runs locally on your machine.
 
-## Supported Platforms
+**Supported outputs:**
+- iOS & macOS app icons (43 sizes across iPhone, iPad, watchOS, macOS)
+- Android launcher icons (mdpi through xxxhdpi)
+- Image sets with 1x/2x/3x or 1x/2x/3x/4x scales
+- Chrome extension icons
 
-### iOS & macOS App Icon
-Complete app icon set with **43 sizes** organized by device:
+## Platform details
 
-**iPhone** (8 sizes)
-- Icon-60 @2x, @3x (60mm, 120mm, 180mm)
-- Icon-20 @2x, @3x (notification)
-- Icon-29 @2x, @3x (settings)
-- Icon-40 @2x, @3x (spotlight)
+### iOS & macOS
 
-**iPad** (9 sizes)
-- Icon-76 @1x, @2x
-- Icon-83.5 @2x (Pro)
-- Icon-20 @1x, @2x
-- Icon-29 @1x, @2x
-- Icon-40 @1x, @2x
+Generates the full set of 43 icon sizes:
 
-**watchOS** (7 sizes)
-- Icon-40, 44, 50, 86, 98, 108 @2x
-- Icon-1024 (App Store)
+**iPhone** – 8 sizes including app icons (60pt @2x/@3x), notifications (20pt), settings (29pt), and spotlight search (40pt)
 
-**macOS** (11 sizes)
-- Icon-16, 32, 64, 128, 256, 512, 1024 @1x, @2x
+**iPad** – 9 sizes covering standard iPad, iPad Pro (83.5pt @2x), and the same auxiliary sizes as iPhone
+
+**watchOS** – 7 sizes for Apple Watch complications and the 1024pt App Store icon
+
+**macOS** – 11 sizes from 16pt up to 1024pt
 
 ### Android
+
+Exports to the standard mipmap folders:
 - mipmap-mdpi (48×48)
 - mipmap-hdpi (72×72)
 - mipmap-xhdpi (96×96)
 - mipmap-xxhdpi (144×144)
 - mipmap-xxxhdpi (192×192)
-- **Custom filename support** (default: `ic_launcher`)
 
-### Image Sets Generator
-Generate 1x/2x/3x or 1x/2x/3x/4x image sets:
-- **3x mode**: base, @2x, @3x
-- **4x mode**: base, @2x, @3x, @4x
-- **Custom filename support** (default: `image`)
-- Includes Contents.json for asset catalogs
+You can customize the filename (defaults to `ic_launcher`).
+
+### Image Sets
+
+For iOS asset catalogs or Android drawable resources. Pick 3x scale (base, @2x, @3x) or 4x scale (adds @4x). Includes Contents.json for iOS. Filename is customizable.
 
 ### Chrome Extension
-- 16×16, 32×32, 48×48, 128×128
 
-## Prerequisites
+Four sizes: 16×16, 32×32, 48×48, 128×128
 
-- **Node.js** 18+ and pnpm
-- **Rust** (for Tauri builds) - Install from [rustup.rs](https://rustup.rs)
-- **Xcode Command Line Tools** (macOS) or **Visual Studio Build Tools** (Windows)
+## Getting started
 
-## Installation
+You'll need:
+- Node.js 18+ and pnpm
+- Rust (for Tauri builds) – install from [rustup.rs](https://rustup.rs)
+- Xcode Command Line Tools (macOS) or Visual Studio Build Tools (Windows)
 
 ```bash
 # Install dependencies
@@ -72,47 +63,47 @@ pnpm tauri dev
 pnpm tauri build
 ```
 
-## Project Structure
+## How the code is organized
 
 ```
 icon-maker/
-├── src/                      # Frontend source
+├── src/                      # Frontend
 │   ├── core/
-│   │   ├── presets.ts        # Platform configurations
-│   │   ├── resize.ts         # Image resize utilities
-│   │   └── exporter.ts       # ZIP export logic
-│   ├── components/           # React components
-│   ├── App.tsx               # Main application
-│   └── App.css               # Styles
+│   │   ├── presets.ts        # Platform configs
+│   │   ├── resize.ts         # Image resizing
+│   │   └── exporter.ts       # ZIP generation
+│   ├── components/           # UI components
+│   ├── App.tsx               # Main app
+│   └── App.css
 ├── src-tauri/                # Tauri backend
 │   ├── src/
-│   │   └── main.rs           # Rust entry point
-│   ├── tauri.conf.json       # Tauri configuration
-│   └── Cargo.toml            # Rust dependencies
+│   │   └── main.rs
+│   ├── tauri.conf.json
+│   └── Cargo.toml
 ├── package.json
 └── vite.config.ts
 ```
 
-## Usage
+## Using the app
 
-1. **Launch the application** using `pnpm tauri dev` (development) or run the built app
-2. **Select an image** by clicking the upload area or dragging and dropping (recommended: 1024×1024 PNG)
-3. **Choose a platform** from the available presets
-4. **Configure options** (if applicable):
-   - Android: Change the filename (default: `ic_launcher`)
-   - Image Sets: Select 3x or 4x scale preset, change filename (default: `image`)
-5. **Preview** the generated icons in the preview grid (grouped by device for iOS & macOS)
-6. **Click Export** to generate and save the ZIP file
+1. Start with `pnpm tauri dev` or run the built app
+2. Drop a source image onto the upload area (1024×1024 PNG works best)
+3. Pick your platforms from the sidebar
+4. Tweak any options:
+   - Android: set a custom filename
+   - Image Sets: choose 3x or 4x scale, set filename
+5. Preview the generated icons in the main area
+6. Hit Export and pick where to save the ZIP
 
-## Technical Details
+## Under the hood
 
-- **Frontend**: React 18 + TypeScript + Vite
-- **Desktop Framework**: Tauri 2.x
-- **Image Processing**: HTML Canvas API with high-quality smoothing
-- **ZIP Generation**: JSZip
-- **File Access**: Tauri Dialog and FS plugins
+- React 18 + TypeScript + Vite for the UI
+- Tauri 2.x for the desktop wrapper
+- Canvas API for image resizing (uses high-quality smoothing)
+- JSZip for ZIP generation
+- Tauri Dialog and FS plugins for file operations
 
-## Building for Distribution
+## Building for release
 
 ### macOS
 ```bash
@@ -125,7 +116,7 @@ pnpm tauri build --target x86_64-apple-darwin   # Intel
 pnpm tauri build --target x86_64-pc-windows-msvc
 ```
 
-Built applications will be in `src-tauri/target/release/bundle/`.
+Find the built installers in `src-tauri/target/release/bundle/`.
 
 ## License
 
