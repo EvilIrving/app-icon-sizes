@@ -1,0 +1,7 @@
+[build]
+target-dir = "../target"
+
+[target]
+# macOS
+aarch64-apple-darwin = { rustflags = ["-C", "link-arg=-mmacosx-version-min=10.13"] }
+x86_64-apple-darwin = { rustflags = ["-C", "link-arg=-mmacosx-version-min=10.13"] }
