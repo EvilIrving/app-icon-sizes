@@ -1,4 +1,21 @@
 export * from './presets';
 export * from './resize';
 export * from './exporter';
-export * from './sizeConfig';
+// Export from sizeConfig except ExportEntry (already from presets) to avoid TS2308
+export {
+  type IconEntry,
+  type AndroidIconEntry,
+  type StoreEntry,
+  type IconsConfig,
+  type ImageSetEntry,
+  type ImageSetsConfig,
+  loadSizeConfig,
+  type IconIdiom,
+  IDIOM_FOLDERS,
+  getAppIconExportEntriesFromConfig,
+  getAndroidExportEntriesFromConfig,
+  getStoresExportEntriesFromConfig,
+  generateAppIconContentsJsonFromConfig,
+  getImageSetPlatformsFromConfig,
+} from './sizeConfig';
+export type { SizeConfig } from './sizeConfig';

@@ -6,6 +6,7 @@ import {
   type PlatformPreset,
   getImageDimensions,
   getOutputFilename,
+  getExpectedPixelSize,
   generateAppIconContentsJson,
   getAndroidExportEntries,
   toZipPath,
@@ -88,6 +89,9 @@ export default function App() {
     return IMAGE_SET_PLATFORMS;
   }, [sizeConfig]);
 
+  /** 多倍图基础尺寸（pt），实际像素 = imageSetBase * scale，输出如 image384@3x.png */
+  const imageSetBase = sizeConfig?.[1]?.base ?? 128;
+
   const applePresetIdToIdiom: Record<string, IconIdiom | undefined> = useMemo(() => ({
     'ios': 'iphone',
     'ipados': 'ipad',
@@ -123,16 +127,19 @@ export default function App() {
   const imageSetPreviewItems = useMemo(() => {
     if (!imageDimensions) return [];
     return Array.from(imageSetPlatforms).flatMap((platformId) =>
-      (imageSetPlatformsResolved[platformId] ?? []).map((entry, i) => ({
-        key: `${platformId}-${i}`,
-        width: Math.round(imageDimensions.width * entry.scale),
-        height: Math.round(imageDimensions.height * entry.scale),
-        label: entry.postfix || '1x',
-        filename: `${imageSetFilename}${entry.postfix}.png`,
-        folder: entry.folder,
-      }))
+      (imageSetPlatformsResolved[platformId] ?? []).map((entry, i) => {
+        const pixelSize = Math.round(imageSetBase * entry.scale);
+        return {
+          key: `${platformId}-${i}`,
+          width: pixelSize,
+          height: pixelSize,
+          label: entry.postfix || '1x',
+          filename: `${imageSetFilename}${pixelSize}${entry.postfix}.png`,
+          folder: entry.folder,
+        };
+      })
     );
-  }, [imageSetPlatforms, imageDimensions, imageSetFilename, imageSetPlatformsResolved]);
+  }, [imageSetPlatforms, imageDimensions, imageSetFilename, imageSetPlatformsResolved, imageSetBase]);
 
   const canExport = sourceImage && totalCount > 0 && !isExporting;
 
@@ -275,7 +282,8 @@ export default function App() {
             for (const size of preset.sizes) {
               const fn = preset.id === 'android' ? androidFilename : undefined;
               const filename = getOutputFilename(size, preset, fn);
-              const resized = await resizeImage(sourceImage, size.width, size.height);
+              const { width: pxW, height: pxH } = getExpectedPixelSize(size);
+              const resized = await resizeImage(sourceImage, pxW, pxH);
               const data = await blobToArrayBuffer(resized);
               const zipPath = toZipPath(preset.outputDir, filename);
               zip.file(zipPath, data);
@@ -289,17 +297,17 @@ export default function App() {
           zip.file(toZipPath('Assets.xcassets/AppIcon.appiconset', 'Contents.json'), contentsJson);
         }
       } else if (mode === 'imagesets' && imageDimensions) {
-        const baseW = imageDimensions.width;
-        const baseH = imageDimensions.height;
+        const base = imageSetBase;
         for (const platformId of imageSetPlatforms) {
           const entries = imageSetPlatformsResolved[platformId];
           if (!entries) continue;
           for (const { postfix, folder, scale } of entries) {
-            const w = Math.round(baseW * scale);
-            const h = Math.round(baseH * scale);
+            const pixelSize = Math.round(base * scale);
+            const w = pixelSize;
+            const h = pixelSize;
             const resized = await resizeImage(sourceImage, w, h);
             const data = await blobToArrayBuffer(resized);
-            const filename = `${imageSetFilename}${postfix}.png`;
+            const filename = `${imageSetFilename}${pixelSize}${postfix}.png`;
             const zipPath = toZipPath(folder, filename);
             zip.file(zipPath, data);
             current++;
@@ -357,7 +365,7 @@ export default function App() {
       setIsExporting(false);
       setExportProgress(null);
     }
-  }, [sourceImage, mode, selectedPresets, androidFilename, imageSetPlatforms, imageDimensions, imageSetFilename, customSizes, customOutputName, totalCount, sizeConfig, imageSetPlatformsResolved, applePresetIdToIdiom]);
+  }, [sourceImage, mode, selectedPresets, androidFilename, imageSetPlatforms, imageDimensions, imageSetFilename, imageSetBase, customSizes, customOutputName, totalCount, sizeConfig, imageSetPlatformsResolved, applePresetIdToIdiom]);
 
   // ── Render helpers ──
 
@@ -659,12 +667,13 @@ export default function App() {
                 <div className="preview-grid">
                   {preset.sizes.map((size, i) => {
                     const fn = getIconFilename(size, preset);
+                    const { width: pxW, height: pxH } = getExpectedPixelSize(size);
                     const sizeLabel = size.density
                       ? `${size.width}×${size.height} · ${size.density}`
-                      : `${size.width}×${size.height}`;
+                      : `${pxW}×${pxH}`;
                     return (
                       <div key={i} className="preview-card">
-                        <div className="card-icon" style={{ width: Math.min(80, size.width), height: Math.min(80, size.height), margin: '0 auto 8px' }}>
+                        <div className="card-icon" style={{ width: Math.min(80, pxW), height: Math.min(80, pxH), margin: '0 auto 8px' }}>
                           <img src={imagePreview!} alt={fn} />
                         </div>
                         <div className="card-name">{fn}</div>

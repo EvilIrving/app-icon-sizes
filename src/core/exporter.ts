@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import type { PlatformPreset, IconSize, ScalePreset } from './presets';
 import { 
   getOutputFilename, 
+  getExpectedPixelSize,
   generateImageSetsContentsJson,
   getAndroidExportEntries,
   toZipPath,
@@ -77,7 +78,8 @@ export async function exportIcons(options: ExportOptions): Promise<ExportResult>
     for (let i = 0; i < sizesToGenerate.length; i++) {
       const size = sizesToGenerate[i];
       const filename = getOutputFilename(size, preset, customFilename);
-      const resizedBlob = await resizeImage(sourceImage, size.width, size.height);
+      const { width: pxW, height: pxH } = getExpectedPixelSize(size);
+      const resizedBlob = await resizeImage(sourceImage, pxW, pxH);
       const imageData = await blobToArrayBuffer(resizedBlob);
       const zipPath = toZipPath(preset.outputDir, filename);
       zip.file(zipPath, imageData);

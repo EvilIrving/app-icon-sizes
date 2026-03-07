@@ -46,6 +46,8 @@ export interface ImageSetEntry {
 }
 
 export interface ImageSetsConfig {
+  /** 基础尺寸（pt），实际像素 = base * scale，如 base=128、scale=3 → 384，输出 image384@3x.png */
+  base?: number;
   ios?: ImageSetEntry[];
   android?: ImageSetEntry[];
 }

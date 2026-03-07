@@ -123,6 +123,15 @@ function parseScaleNum(scaleStr: string): number {
   return m ? parseFloat(m) || 1 : 1;
 }
 
+/** Get actual pixel dimensions from IconSize: when scale is present, size is in points and we multiply by scale to get pixels (e.g. 512@2x => 1024). */
+export function getExpectedPixelSize(size: IconSize): { width: number; height: number } {
+  const scaleNum = size.scale ? parseScaleNum(size.scale) : 1;
+  return {
+    width: Math.round(size.width * scaleNum),
+    height: Math.round(size.height * scaleNum),
+  };
+}
+
 /**
  * All available platform presets
  */

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Rounded corners for the whole logo -->
+    <clipPath id="roundedClip">
+      <rect width="1024" height="1024" rx="192" ry="192"/>
+    </clipPath>
+
+    <!-- Background radial gradient -->
+    <radialGradient id="bgGrad" cx="40%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#1C1540"/>
+      <stop offset="100%" stop-color="#080610"/>
+    </radialGradient>
+
+    <!-- Square 1 – large, background anchor -->
+    <linearGradient id="sq1Fill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2A1A6E"/>
+      <stop offset="100%" stop-color="#120B38"/>
+    </linearGradient>
+
+    <!-- Square 2 – mid, vivid purple -->
+    <linearGradient id="sq2Fill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#5B21B6"/>
+    </linearGradient>
+
+    <!-- Square 3 – front, warm accent -->
+    <linearGradient id="sq3Fill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF8450"/>
+      <stop offset="100%" stop-color="#F03A3A"/>
+    </linearGradient>
+
+    <!-- Glow on sq1 border -->
+    <filter id="glowSoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Stronger glow on accent square -->
+    <filter id="glowHot" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="28" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Noise texture for depth -->
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noiseOut"/>
+      <feColorMatrix type="saturate" values="0" in="noiseOut" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Subtle inner shadow for sq1 -->
+    <filter id="innerShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="15" result="blur"/>
+      <feOffset dx="0" dy="6" result="offsetBlur"/>
+      <feComposite in="SourceGraphic" in2="offsetBlur" operator="over"/>
+    </filter>
+
+  </defs>
+
+  <g clip-path="url(#roundedClip)">
+  <!-- ── Background ─────────────────────────────────────── -->
+  <rect width="1024" height="1024" fill="url(#bgGrad)"/>
+
+  <!-- Subtle radial vignette -->
+  <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+    <stop offset="60%" stop-color="transparent"/>
+    <stop offset="100%" stop-color="#000007" stop-opacity="0.6"/>
+  </radialGradient>
+  <rect width="1024" height="1024" fill="url(#vignette)"/>
+
+  <!-- ── Square 1 — large, anchored center ──────────────── -->
+  <!-- Glow halo behind sq1 -->
+  <rect x="242" y="242" width="540" height="540" rx="88"
+        fill="none" stroke="#4C2AA8" stroke-width="1"
+        opacity="0.5" filter="url(#glowSoft)"/>
+
+  <!-- Main body -->
+  <rect x="242" y="242" width="540" height="540" rx="88"
+        fill="url(#sq1Fill)"/>
+
+  <!-- Very subtle highlight top-left edge -->
+  <rect x="242" y="242" width="540" height="540" rx="88"
+        fill="none" stroke="#5A3DB8" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- ── Square 2 — mid, vivid purple ───────────────────── -->
+  <rect x="442" y="442" width="340" height="340" rx="60"
+        fill="url(#sq2Fill)"/>
+
+  <!-- Highlight stroke -->
+  <rect x="442" y="442" width="340" height="340" rx="60"
+        fill="none" stroke="#A78BFA" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- ── Square 3 — small, hot accent ───────────────────── -->
+  <!-- Glow bloom -->
+  <rect x="604" y="604" width="178" height="178" rx="30"
+        fill="#FF6030" opacity="0.35" filter="url(#glowHot)"/>
+
+  <!-- Main body -->
+  <rect x="604" y="604" width="178" height="178" rx="30"
+        fill="url(#sq3Fill)"/>
+
+  <!-- Crisp highlight stroke -->
+  <rect x="604" y="604" width="178" height="178" rx="30"
+        fill="none" stroke="#FFBFA0" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Tiny specular dot top-left of sq3 -->
+  <circle cx="632" cy="630" r="8" fill="white" opacity="0.18"/>
+
+  <!-- ── Subtle noise overlay on the whole mark ─────────── -->
+  <rect x="242" y="242" width="540" height="540" rx="88"
+        fill="white" opacity="0.015" filter="url(#noise)"/>
+  </g>
+
+</svg>
