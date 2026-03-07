@@ -75,6 +75,8 @@
   </radialGradient>
   <rect width="1024" height="1024" fill="url(#vignette)"/>
 
+  <!-- Logo mark: scaled to ~82% so icon has safe-area padding and matches other app icons visually -->
+  <g transform="translate(512,512) scale(0.82) translate(-512,-512)">
   <!-- ── Square 1 — large, anchored center ──────────────── -->
   <!-- Glow halo behind sq1 -->
   <rect x="242" y="242" width="540" height="540" rx="88"
@@ -116,6 +118,7 @@
   <!-- ── Subtle noise overlay on the whole mark ─────────── -->
   <rect x="242" y="242" width="540" height="540" rx="88"
         fill="white" opacity="0.015" filter="url(#noise)"/>
+  </g>
   </g>
 
 </svg>

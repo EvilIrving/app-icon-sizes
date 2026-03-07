@@ -357,8 +357,21 @@ export default function App() {
       const zipData = await zip.generateAsync({ type: 'arraybuffer' });
       const random6 = String(Math.floor(Math.random() * 1e6)).padStart(6, '0');
       const zipPrefix = mode === 'icons' ? 'appicons' : mode === 'imagesets' ? 'imagesets' : 'custom';
-      await saveZipWithDialog(zipData, `${zipPrefix}-${random6}.zip`);
-      setExportComplete(true);
+      const result = await saveZipWithDialog(zipData, `${zipPrefix}-${random6}.zip`);
+      if (result.saved) {
+        setExportComplete(true);
+        if (result.path) {
+          try {
+            const { revealItemInDir } = await import('@tauri-apps/plugin-opener');
+            await revealItemInDir(result.path);
+          } catch (_) { /* opener not available */ }
+          try {
+            const { isPermissionGranted, requestPermission, sendNotification } = await import('@tauri-apps/plugin-notification');
+            if (!(await isPermissionGranted())) await requestPermission();
+            sendNotification({ title: 'Icon Maker', body: '导出完成，已打开所在文件夹' });
+          } catch (_) { /* notification not available */ }
+        }
+      }
     } catch (err) {
       console.error('Export failed:', err);
     } finally {

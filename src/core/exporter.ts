@@ -126,13 +126,19 @@ function isTauri(): boolean {
   return typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 }
 
+export interface SaveZipResult {
+  saved: boolean;
+  /** When running in Tauri and user chose a path, the saved file path */
+  path?: string;
+}
+
 /**
  * Save ZIP file: use Tauri save dialog in desktop app, otherwise trigger browser download
  */
-export async function saveZipWithDialog(zipData: ArrayBuffer, defaultFilename: string): Promise<boolean> {
+export async function saveZipWithDialog(zipData: ArrayBuffer, defaultFilename: string): Promise<SaveZipResult> {
   if (!isTauri()) {
     downloadZip(zipData, defaultFilename);
-    return true;
+    return { saved: true };
   }
 
   const { save } = await import('@tauri-apps/plugin-dialog');
@@ -147,11 +153,11 @@ export async function saveZipWithDialog(zipData: ArrayBuffer, defaultFilename: s
   });
 
   if (!filePath) {
-    return false;
+    return { saved: false };
   }
 
   const uint8Array = new Uint8Array(zipData);
   await writeFile(filePath, uint8Array);
 
-  return true;
+  return { saved: true, path: filePath };
 }

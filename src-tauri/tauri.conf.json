@@ -40,6 +40,8 @@
   },
   "plugins": {
     "dialog": null,
-    "fs": null
+    "fs": null,
+    "opener": null,
+    "notification": null
   }
 }

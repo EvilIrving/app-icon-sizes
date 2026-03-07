@@ -223,10 +223,6 @@ body {
   object-fit: contain;
 }
 
-.source-zone.has-image .source-thumb img {
-  object-fit: cover;
-}
-
 .source-meta {
   flex: 1;
   min-width: 0;
