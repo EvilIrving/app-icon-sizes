@@ -499,6 +499,44 @@
             "filename": "playstore.png",
             "folder": ""
         }
+    ],
+    "favicon": [
+        {
+            "size": "16x16",
+            "expected-size": "16",
+            "filename": "favicon-16x16.png",
+            "folder": "favicon"
+        },
+        {
+            "size": "32x32",
+            "expected-size": "32",
+            "filename": "favicon-32x32.png",
+            "folder": "favicon"
+        },
+        {
+            "size": "48x48",
+            "expected-size": "48",
+            "filename": "favicon-48x48.png",
+            "folder": "favicon"
+        },
+        {
+            "size": "64x64",
+            "expected-size": "64",
+            "filename": "favicon-64x64.png",
+            "folder": "favicon"
+        },
+        {
+            "size": "128x128",
+            "expected-size": "128",
+            "filename": "favicon-128x128.png",
+            "folder": "favicon"
+        },
+        {
+            "size": "256x256",
+            "expected-size": "256",
+            "filename": "favicon-256x256.png",
+            "folder": "favicon"
+        }
     ]
   },
   {

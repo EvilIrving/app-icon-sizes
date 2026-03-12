@@ -34,6 +34,7 @@ export const translations = {
     export: 'Export',
     exporting: 'Exporting…',
     exportComplete: 'Export complete',
+    exportFailed: 'Export failed. Please check folder permissions and try again.',
     platform: 'platform',
     platforms: 'platforms',
     size: 'size',
@@ -60,6 +61,13 @@ export const translations = {
 
     // Size list
     noSizesAdded: 'No sizes added',
+
+    // Store images toggle
+    includeStoreImages: 'Include Store Images',
+
+    // Card actions
+    download: 'Download',
+    remove: 'Remove',
   },
   zh: {
     // App title and meta
@@ -94,6 +102,7 @@ export const translations = {
     export: '导出',
     exporting: '导出中…',
     exportComplete: '导出完成',
+    exportFailed: '导出失败，请检查下载/桌面/文档目录权限后重试。',
     platform: '个平台',
     platforms: '个平台',
     size: '个尺寸',
@@ -120,6 +129,13 @@ export const translations = {
 
     // Size list
     noSizesAdded: '未添加尺寸',
+
+    // Store images toggle
+    includeStoreImages: '包含商店图片',
+
+    // Card actions
+    download: '下载',
+    remove: '移除',
   },
 } as const;
 

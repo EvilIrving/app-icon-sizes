@@ -8,6 +8,14 @@
     "dialog:default",
     "fs:default",
     "fs:allow-write-file",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        "$DOWNLOAD/**",
+        "$DESKTOP/**",
+        "$DOCUMENT/**"
+      ]
+    },
     "opener:allow-reveal-item-in-dir",
     "notification:default"
   ]

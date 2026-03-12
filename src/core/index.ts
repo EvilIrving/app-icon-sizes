@@ -12,9 +12,11 @@ export {
   loadSizeConfig,
   type IconIdiom,
   IDIOM_FOLDERS,
+  FAVICON_FOLDER,
   getAppIconExportEntriesFromConfig,
   getAndroidExportEntriesFromConfig,
   getStoresExportEntriesFromConfig,
+  getFaviconExportEntriesFromConfig,
   generateAppIconContentsJsonFromConfig,
   getImageSetPlatformsFromConfig,
 } from './sizeConfig';

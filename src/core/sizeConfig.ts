@@ -37,6 +37,7 @@ export interface IconsConfig {
   mac?: IconEntry[];
   android?: AndroidIconEntry[];
   stores?: StoreEntry[];
+  favicon?: IconEntry[];
 }
 
 export interface ImageSetEntry {
@@ -92,6 +93,9 @@ export const IDIOM_FOLDERS: Record<IconIdiom, string> = {
   watch: 'watchos',
   mac: 'macos',
 };
+
+/** Favicon export folder */
+export const FAVICON_FOLDER = 'favicon';
 
 /** App Icon export entries from size.json icons. When idiom is set, only that device group; folder = platformPrefix + size.json folder so structure is preserved (e.g. ios/Assets.xcassets/AppIcon.appiconset/) */
 export function getAppIconExportEntriesFromConfig(icons: IconsConfig, idiom?: IconIdiom): ExportEntry[] {
@@ -167,4 +171,16 @@ export function getImageSetPlatformsFromConfig(imagesets: ImageSetsConfig): Reco
     ios: imagesets.ios ?? [],
     android: imagesets.android ?? [],
   };
+}
+
+/** Favicon export entries from size.json icons.favicon */
+export function getFaviconExportEntriesFromConfig(icons: IconsConfig): ExportEntry[] {
+  const arr = icons.favicon;
+  if (!arr?.length) return [];
+  return arr.map((e) => {
+    const folder = (e.folder || '').replace(/\/$/, '') || FAVICON_FOLDER;
+    const filename = e.filename || '';
+    const expectedSize = parseInt(String(e['expected-size']), 10) || 0;
+    return toExportEntry(folder, filename, expectedSize);
+  });
 }

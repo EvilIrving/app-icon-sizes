@@ -128,12 +128,12 @@ function isTauri(): boolean {
 
 export interface SaveZipResult {
   saved: boolean;
-  /** When running in Tauri and user chose a path, the saved file path */
+  /** When running in Tauri and save succeeded, the saved file path */
   path?: string;
 }
 
 /**
- * Save ZIP file: use Tauri save dialog in desktop app, otherwise trigger browser download
+ * Save ZIP file: in desktop app, write to Downloads/Desktop/Documents; in browser, trigger download
  */
 export async function saveZipWithDialog(zipData: ArrayBuffer, defaultFilename: string): Promise<SaveZipResult> {
   if (!isTauri()) {
@@ -141,23 +141,30 @@ export async function saveZipWithDialog(zipData: ArrayBuffer, defaultFilename: s
     return { saved: true };
   }
 
-  const { save } = await import('@tauri-apps/plugin-dialog');
-  const { writeFile } = await import('@tauri-apps/plugin-fs');
+  const uint8Array = new Uint8Array(zipData);
+  const { writeFile, BaseDirectory } = await import('@tauri-apps/plugin-fs');
+  const { downloadDir, desktopDir, documentDir, join } = await import('@tauri-apps/api/path');
 
-  const filePath = await save({
-    defaultPath: defaultFilename,
-    filters: [{
-      name: 'ZIP File',
-      extensions: ['zip'],
-    }],
-  });
+  const targets = [
+    { baseDir: BaseDirectory.Download, getDir: downloadDir },
+    { baseDir: BaseDirectory.Desktop, getDir: desktopDir },
+    { baseDir: BaseDirectory.Document, getDir: documentDir },
+  ];
 
-  if (!filePath) {
-    return { saved: false };
+  let lastError: unknown;
+  for (const target of targets) {
+    try {
+      await writeFile(defaultFilename, uint8Array, { baseDir: target.baseDir });
+      const dir = await target.getDir();
+      const filePath = await join(dir, defaultFilename);
+      return { saved: true, path: filePath };
+    } catch (err) {
+      lastError = err;
+    }
   }
 
-  const uint8Array = new Uint8Array(zipData);
-  await writeFile(filePath, uint8Array);
-
-  return { saved: true, path: filePath };
+  if (lastError instanceof Error) {
+    throw lastError;
+  }
+  throw new Error('Failed to save ZIP file');
 }
