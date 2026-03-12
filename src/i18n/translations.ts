@@ -23,7 +23,7 @@ export const translations = {
 
     // Image Sets section
     filename: 'FILENAME',
-    imageSetsHint: 'iOS: ios/ (1x, @2x, @3x). Android: drawable-*dpi (1x, 1.5x, 2x, 3x)',
+    imageSetsHint: 'iOS: Assets.xcassets/<name>.imageset (1x, @2x, @3x). Android: drawable-*dpi (1x, 1.5x, 2x, 3x)',
 
     // Custom Sizes section
     sizesLabel: 'SIZES',
@@ -91,7 +91,7 @@ export const translations = {
 
     // Image Sets section
     filename: '文件名',
-    imageSetsHint: 'iOS: ios/ (1x, @2x, @3x)。Android: drawable-*dpi (1x, 1.5x, 2x, 3x)',
+    imageSetsHint: 'iOS: Assets.xcassets/<name>.imageset (1x, @2x, @3x)。Android: drawable-*dpi (1x, 1.5x, 2x, 3x)',
 
     // Custom Sizes section
     sizesLabel: '尺寸',

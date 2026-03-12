@@ -7,13 +7,17 @@
     "core:default",
     "dialog:default",
     "fs:default",
+    "fs:allow-read-file",
     "fs:allow-write-file",
     {
       "identifier": "fs:scope",
       "allow": [
+        "$HOME/**",
         "$DOWNLOAD/**",
         "$DESKTOP/**",
-        "$DOCUMENT/**"
+        "$DOCUMENT/**",
+        "$PICTURE/**",
+        "$PUBLIC/**"
       ]
     },
     "opener:allow-reveal-item-in-dir",

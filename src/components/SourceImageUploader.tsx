@@ -26,6 +26,25 @@ export default function SourceImageUploader({
     file.type === 'image/svg+xml' || file.type === 'text/xml' || /\.svgz?$/i.test(file.name),
   []);
 
+  const getMimeTypeFromPath = useCallback((path: string) => {
+    const normalized = path.toLowerCase();
+
+    if (normalized.endsWith('.png')) return 'image/png';
+    if (normalized.endsWith('.jpg') || normalized.endsWith('.jpeg')) return 'image/jpeg';
+    if (normalized.endsWith('.webp')) return 'image/webp';
+    if (normalized.endsWith('.gif')) return 'image/gif';
+    if (normalized.endsWith('.bmp')) return 'image/bmp';
+    if (normalized.endsWith('.ico')) return 'image/x-icon';
+    if (normalized.endsWith('.svg') || normalized.endsWith('.svgz')) return 'image/svg+xml';
+
+    return 'application/octet-stream';
+  }, []);
+
+  const getFilenameFromPath = useCallback((path: string) => {
+    const segments = path.split(/[/\\]/);
+    return segments[segments.length - 1] || 'image';
+  }, []);
+
   const handleFileSelect = useCallback(async (file: File) => {
     const accepted = file.type.startsWith('image/') || isSvgFile(file);
     if (!accepted) return;
@@ -42,6 +61,69 @@ export default function SourceImageUploader({
 
     onImageSelect(file);
   }, [isSvgFile, onImageSelect]);
+
+  const handleNativeDropPath = useCallback(async (path: string) => {
+    try {
+      const [{ readFile }, { convertFileSrc }] = await Promise.all([
+        import('@tauri-apps/plugin-fs'),
+        import('@tauri-apps/api/core'),
+      ]);
+      const bytes = await readFile(path);
+      const filename = getFilenameFromPath(path);
+      const mimeType = getMimeTypeFromPath(path);
+      const file = new File([bytes], filename, { type: mimeType });
+
+      if (mimeType === 'application/octet-stream') {
+        const previewUrl = convertFileSrc(path);
+        if (!/\.(png|jpe?g|webp|gif|bmp|ico|svgz?)$/i.test(previewUrl)) return;
+      }
+
+      await handleFileSelect(file);
+    } catch (error) {
+      console.error('Failed to load dropped file from native path:', error);
+    }
+  }, [getFilenameFromPath, getMimeTypeFromPath, handleFileSelect]);
+
+  useEffect(() => {
+    let unlisten: (() => void) | undefined;
+    let disposed = false;
+
+    const registerNativeDrop = async () => {
+      try {
+        const { getCurrentWindow } = await import('@tauri-apps/api/window');
+        unlisten = await getCurrentWindow().onDragDropEvent(async (event) => {
+          if (disposed) return;
+
+          if (event.payload.type === 'enter' || event.payload.type === 'over') {
+            setDragOver(true);
+            return;
+          }
+
+          if (event.payload.type === 'leave') {
+            setDragOver(false);
+            return;
+          }
+
+          if (event.payload.type === 'drop') {
+            setDragOver(false);
+            const path = event.payload.paths[0];
+            if (path) {
+              await handleNativeDropPath(path);
+            }
+          }
+        });
+      } catch {
+        // Browser mode or unsupported runtime: keep HTML5 drag-and-drop only.
+      }
+    };
+
+    void registerNativeDrop();
+
+    return () => {
+      disposed = true;
+      unlisten?.();
+    };
+  }, [handleNativeDropPath]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();

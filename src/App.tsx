@@ -4,16 +4,20 @@ import {
   PRESETS,
   IMAGE_SET_PLATFORMS,
   type PlatformPreset,
+  type ApplePresetId,
   getImageDimensions,
   toZipPath,
   loadSizeConfig,
   type SizeConfig,
-  type IconIdiom,
+  getApplePresetIdiom,
+  getAppIconsetFolderByPresetId,
   getAppIconExportEntriesFromConfig,
   getAndroidExportEntriesFromConfig,
   getStoresExportEntriesFromConfig,
   getFaviconExportEntriesFromConfig,
   generateAppIconContentsJsonFromConfig,
+  generateAssetCatalogContentsJson,
+  generateImageSetContentsJson,
   getImageSetPlatformsFromConfig,
 } from './core';
 import { resizeImage, blobToArrayBuffer, saveZipWithDialog } from './core';
@@ -33,6 +37,25 @@ import './App.css';
 const ALL_PLATFORMS: { id: string; preset: PlatformPreset }[] = PRESETS
   .filter(p => p.id !== 'image-sets')
   .map(p => ({ id: p.id, preset: p }));
+
+const ASSET_CATALOG_ROOT = 'Assets.xcassets';
+
+function isApplePresetId(id: string): id is ApplePresetId {
+  return id === 'ios' || id === 'ipados' || id === 'macos' || id === 'watchos';
+}
+
+function getIosImagesetFolder(imageSetFilename: string): string {
+  return `${ASSET_CATALOG_ROOT}/${imageSetFilename}.imageset`;
+}
+
+function getIosImagesetFilename(imageSetFilename: string, postfix: string): string {
+  return `${imageSetFilename}${postfix || ''}.png`;
+}
+
+function getScaleFromPostfix(postfix: string): string {
+  if (!postfix) return '1x';
+  return postfix.startsWith('@') ? postfix.slice(1) : postfix;
+}
 
 export default function App() {
   const { t } = useI18n();
@@ -98,19 +121,15 @@ export default function App() {
 
   const imageSetBase = sizeConfig?.[1]?.base ?? 128;
 
-  const applePresetIdToIdiom: Record<string, IconIdiom | undefined> = useMemo(() => ({
-    'ios': 'iphone',
-    'ipados': 'ipad',
-    'macos': 'mac',
-    'watchos': 'watch',
-  }), []);
-
   const totalCount = useMemo(() => {
     if (mode === 'icons') {
       const [icons] = sizeConfig ?? [];
       let iconsCount = selectedPresets.reduce((a, p) => {
-        const idiom = applePresetIdToIdiom[p.id];
-        if (idiom && icons) return a + getAppIconExportEntriesFromConfig(icons, idiom).length;
+        if (isApplePresetId(p.id) && icons) {
+          const idiom = getApplePresetIdiom(p.id);
+          const folder = getAppIconsetFolderByPresetId(p.id);
+          return a + getAppIconExportEntriesFromConfig(icons, idiom, folder).length;
+        }
         if (p.id === 'android' && icons) return a + getAndroidExportEntriesFromConfig(icons, androidFilename).length;
         return a + p.sizes.length;
       }, 0);
@@ -136,7 +155,7 @@ export default function App() {
       return n;
     }
     return customSizes.length;
-  }, [mode, selectedPresets, customSizes, imageSetPlatforms, androidFilename, sizeConfig, imageSetPlatformsResolved, applePresetIdToIdiom, includeStoreImages]);
+  }, [mode, selectedPresets, customSizes, imageSetPlatforms, androidFilename, sizeConfig, imageSetPlatformsResolved, includeStoreImages]);
 
   const imageSetPreviewItems = useMemo(() => {
     if (!imageDimensions) return [];
@@ -148,8 +167,12 @@ export default function App() {
           width: pixelSize,
           height: pixelSize,
           label: entry.postfix || '1x',
-          filename: `${imageSetFilename}${pixelSize}${entry.postfix}.png`,
-          folder: entry.folder,
+          filename: platformId === 'ios'
+            ? getIosImagesetFilename(imageSetFilename, entry.postfix)
+            : `${imageSetFilename}${pixelSize}${entry.postfix}.png`,
+          folder: platformId === 'ios'
+            ? getIosImagesetFolder(imageSetFilename)
+            : entry.folder,
         };
       })
     );
@@ -262,14 +285,16 @@ export default function App() {
       const zip = new JSZip();
       let total = totalCount;
       let current = 0;
+      let hasAssetCatalogFiles = false;
       const [icons] = sizeConfig ?? [];
 
       if (mode === 'icons') {
         for (const preset of selectedPresets) {
-          if (applePresetIdToIdiom[preset.id] && icons) {
-            const idiom = applePresetIdToIdiom[preset.id]!;
-            const entries = getAppIconExportEntriesFromConfig(icons, idiom);
-            let firstEntryFolder = '';
+          if (isApplePresetId(preset.id) && icons) {
+            const idiom = getApplePresetIdiom(preset.id);
+            const appIconsetFolder = getAppIconsetFolderByPresetId(preset.id);
+            const entries = getAppIconExportEntriesFromConfig(icons, idiom, appIconsetFolder);
+            const exportedFilenames = new Set<string>();
             for (let i = 0; i < entries.length; i++) {
               const entry = entries[i];
               const key = `${preset.id}-${i}`;
@@ -281,12 +306,12 @@ export default function App() {
               zip.file(zipPath, data);
               current++;
               setExportProgress({ current, total, filename: zipPath });
-              if (!firstEntryFolder) firstEntryFolder = entry.folder;
+              exportedFilenames.add(entry.filename);
             }
-            const contentsJson = generateAppIconContentsJsonFromConfig(icons, idiom);
-            if (entries.length > 0) {
-              const contentsFolder = firstEntryFolder.replace(/\/[^/]+$/, '');
-              zip.file(toZipPath(contentsFolder, 'Contents.json'), contentsJson);
+            if (exportedFilenames.size > 0) {
+              hasAssetCatalogFiles = true;
+              const contentsJson = generateAppIconContentsJsonFromConfig(icons, idiom, exportedFilenames);
+              zip.file(toZipPath(appIconsetFolder, 'Contents.json'), contentsJson);
             }
           } else if (preset.id === 'android' && icons) {
             const entries = getAndroidExportEntriesFromConfig(icons, androidFilename);
@@ -375,24 +400,39 @@ export default function App() {
         }
       } else if (mode === 'imagesets' && imageDimensions) {
         const base = imageSetBase;
+        const iosImagesetFolder = getIosImagesetFolder(imageSetFilename);
+        const iosImagesetImages: Array<{ filename: string; scale: string }> = [];
+        const iosSeenFilenames = new Set<string>();
         for (let platformIdx = 0; platformIdx < Array.from(imageSetPlatforms).length; platformIdx++) {
           const platformId = Array.from(imageSetPlatforms)[platformIdx];
           const entries = imageSetPlatformsResolved[platformId];
           if (!entries) continue;
           for (let entryIdx = 0; entryIdx < entries.length; entryIdx++) {
-            const { postfix, folder, scale } = entries[entryIdx];
+            const { postfix, folder: entryFolder, scale } = entries[entryIdx];
             const key = `${platformId}-${entryIdx}`;
             if (excludedSizes.has(key)) continue;
 
             const pixelSize = Math.round(base * scale);
             const resized = await resizeImage(sourceImage, pixelSize, pixelSize);
             const data = await blobToArrayBuffer(resized);
-            const filename = `${imageSetFilename}${pixelSize}${postfix}.png`;
-            const zipPath = toZipPath(folder, filename);
+            const filename = platformId === 'ios'
+              ? getIosImagesetFilename(imageSetFilename, postfix)
+              : `${imageSetFilename}${pixelSize}${postfix}.png`;
+            const outputFolder = platformId === 'ios' ? iosImagesetFolder : entryFolder;
+            const zipPath = toZipPath(outputFolder, filename);
             zip.file(zipPath, data);
             current++;
             setExportProgress({ current, total, filename: zipPath });
+
+            if (platformId === 'ios' && !iosSeenFilenames.has(filename)) {
+              iosSeenFilenames.add(filename);
+              iosImagesetImages.push({ filename, scale: getScaleFromPostfix(postfix) });
+            }
           }
+        }
+        if (iosImagesetImages.length > 0) {
+          hasAssetCatalogFiles = true;
+          zip.file(toZipPath(iosImagesetFolder, 'Contents.json'), generateImageSetContentsJson(iosImagesetImages));
         }
       } else if (mode === 'custom') {
         for (let i = 0; i < customSizes.length; i++) {
@@ -407,6 +447,10 @@ export default function App() {
           current++;
           setExportProgress({ current, total, filename });
         }
+      }
+
+      if (hasAssetCatalogFiles) {
+        zip.file(toZipPath(ASSET_CATALOG_ROOT, 'Contents.json'), generateAssetCatalogContentsJson());
       }
 
       const zipData = await zip.generateAsync({ type: 'arraybuffer' });
@@ -435,7 +479,7 @@ export default function App() {
       setIsExporting(false);
       setExportProgress(null);
     }
-  }, [sourceImage, mode, selectedPresets, androidFilename, imageSetPlatforms, imageDimensions, imageSetFilename, imageSetBase, customSizes, customOutputName, totalCount, sizeConfig, imageSetPlatformsResolved, applePresetIdToIdiom, includeStoreImages, t]);
+  }, [sourceImage, mode, selectedPresets, androidFilename, imageSetPlatforms, imageDimensions, imageSetFilename, imageSetBase, customSizes, customOutputName, totalCount, sizeConfig, imageSetPlatformsResolved, includeStoreImages, t]);
 
   // ── Render ──
 

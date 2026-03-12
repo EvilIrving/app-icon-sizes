@@ -86,29 +86,43 @@ function toExportEntry(folder: string, filename: string, expectedSize: number): 
 /** Idiom key in IconsConfig for filtering by device (iphone, ipad, watch, mac) */
 export type IconIdiom = 'iphone' | 'ipad' | 'watch' | 'mac';
 
-/** Per-idiom output folder so iOS / iPadOS / macOS / watchOS are separate */
-export const IDIOM_FOLDERS: Record<IconIdiom, string> = {
-  iphone: 'ios',
-  ipad: 'ipados',
-  watch: 'watchos',
-  mac: 'macos',
+export type ApplePresetId = 'ios' | 'ipados' | 'macos' | 'watchos';
+
+const APPICONSET_FOLDER_BY_PRESET: Record<ApplePresetId, string> = {
+  ios: 'Assets.xcassets/AppIcon-iOS.appiconset',
+  ipados: 'Assets.xcassets/AppIcon-iPadOS.appiconset',
+  macos: 'Assets.xcassets/AppIcon-macOS.appiconset',
+  watchos: 'Assets.xcassets/AppIcon-watchOS.appiconset',
 };
+
+const APPLE_PRESET_TO_IDIOM: Record<ApplePresetId, IconIdiom> = {
+  ios: 'iphone',
+  ipados: 'ipad',
+  macos: 'mac',
+  watchos: 'watch',
+};
+
+export function getApplePresetIdiom(presetId: ApplePresetId): IconIdiom {
+  return APPLE_PRESET_TO_IDIOM[presetId];
+}
+
+export function getAppIconsetFolderByPresetId(presetId: ApplePresetId): string {
+  return APPICONSET_FOLDER_BY_PRESET[presetId];
+}
 
 /** Favicon export folder */
 export const FAVICON_FOLDER = 'favicon';
 
-/** App Icon export entries from size.json icons. When idiom is set, only that device group; folder = platformPrefix + size.json folder so structure is preserved (e.g. ios/Assets.xcassets/AppIcon.appiconset/) */
-export function getAppIconExportEntriesFromConfig(icons: IconsConfig, idiom?: IconIdiom): ExportEntry[] {
+/** App Icon export entries from size.json icons. When idiom is set, only that device group. */
+export function getAppIconExportEntriesFromConfig(icons: IconsConfig, idiom?: IconIdiom, outputFolder?: string): ExportEntry[] {
   const seen = new Set<string>();
   const out: ExportEntry[] = [];
   const groups = idiom && icons[idiom]?.length
     ? [icons[idiom]!]
     : [icons.iphone, icons.ipad, icons.watch, icons.mac].filter(Boolean) as IconEntry[][];
-  const prefix = idiom ? IDIOM_FOLDERS[idiom] : '';
   for (const arr of groups) {
     for (const e of arr) {
-      const innerFolder = (e.folder || '').replace(/\/$/, '');
-      const folder = prefix ? (prefix + '/' + innerFolder) : innerFolder;
+      const folder = (outputFolder ?? e.folder ?? '').replace(/\/$/, '');
       const filename = e.filename || '';
       const key = `${folder}/${filename}`;
       if (seen.has(key)) continue;
@@ -144,16 +158,19 @@ export function getStoresExportEntriesFromConfig(icons: IconsConfig): ExportEntr
 }
 
 /** Generate AppIcon Contents.json from size.json. When idiom is set, only that device's images; otherwise all */
-export function generateAppIconContentsJsonFromConfig(icons: IconsConfig, idiom?: IconIdiom): string {
+export function generateAppIconContentsJsonFromConfig(icons: IconsConfig, idiom?: IconIdiom, includedFilenames?: Set<string>): string {
   const images: { size: string; filename: string; idiom: string; scale: string; subtype?: string; role?: string }[] = [];
   const groups = idiom && icons[idiom]?.length
     ? [icons[idiom]!]
     : [icons.iphone, icons.ipad, icons.watch, icons.mac].filter(Boolean) as IconEntry[][];
   for (const arr of groups) {
     for (const e of arr) {
+      const filename = e.filename || '';
+      if (!filename) continue;
+      if (includedFilenames && !includedFilenames.has(filename)) continue;
       const item = {
         size: e.size || '1024x1024',
-        filename: e.filename || '',
+        filename,
         idiom: e.idiom || 'universal',
         scale: e.scale || '1x',
         ...(e.subtype && { subtype: e.subtype }),
@@ -163,6 +180,26 @@ export function generateAppIconContentsJsonFromConfig(icons: IconsConfig, idiom?
     }
   }
   return JSON.stringify({ images, info: { author: 'xcode', version: 1 } }, null, 2);
+}
+
+export function generateAssetCatalogContentsJson(): string {
+  return JSON.stringify({ info: { author: 'xcode', version: 1 } }, null, 2);
+}
+
+export interface ImageSetContentsImage {
+  filename: string;
+  scale: string;
+}
+
+export function generateImageSetContentsJson(images: ImageSetContentsImage[]): string {
+  return JSON.stringify({
+    images: images.map((image) => ({
+      filename: image.filename,
+      idiom: 'universal',
+      scale: image.scale,
+    })),
+    info: { author: 'xcode', version: 1 },
+  }, null, 2);
 }
 
 /** Image set platforms from size.json imagesets (ios, android) */

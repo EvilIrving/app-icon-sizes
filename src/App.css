@@ -761,12 +761,14 @@ body {
   word-break: break-all;
   line-height: 1.3;
   margin-bottom: 2px;
+  text-align: center;
 }
 
 .card-size {
   font-size: 10px;
   color: var(--text-muted);
   font-family: var(--font-mono);
+  text-align: center;
 }
 
 /* ===== Card Actions (Hover Overlay) ===== */
