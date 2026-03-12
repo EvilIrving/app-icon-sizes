@@ -63,6 +63,26 @@ function getExpectedPixelSize(size: IconSize): { width: number; height: number }
   };
 }
 
+function getScaleSortValue(size: IconSize): number {
+  return size.scale ? parseFloat(size.scale.replace('x', '')) || 1 : 1;
+}
+
+function sortSizesAscending(sizes: IconSize[]): Array<{ size: IconSize; originalIndex: number }> {
+  return sizes
+    .map((size, originalIndex) => ({ size, originalIndex }))
+    .sort((a, b) => {
+      const aPixels = getExpectedPixelSize(a.size);
+      const bPixels = getExpectedPixelSize(b.size);
+      const aArea = aPixels.width * aPixels.height;
+      const bArea = bPixels.width * bPixels.height;
+
+      if (aArea !== bArea) return aArea - bArea;
+      if (a.size.width !== b.size.width) return a.size.width - b.size.width;
+      if (a.size.height !== b.size.height) return a.size.height - b.size.height;
+      return getScaleSortValue(a.size) - getScaleSortValue(b.size);
+    });
+}
+
 /**
  * Download a single resized image
  */
@@ -110,13 +130,13 @@ export default function PreviewGrid(props: PreviewGridProps) {
               <span className="group-count">{preset.sizes.length} {t('sizes')}</span>
             </div>
             <div className="preview-grid">
-              {preset.sizes.map((size, i) => {
+              {sortSizesAscending(preset.sizes).map(({ size, originalIndex }) => {
                 const fn = getIconFilename(size, preset, androidFilename);
                 const { width: pxW, height: pxH } = getExpectedPixelSize(size);
                 const sizeLabel = size.density
                   ? `${size.width}×${size.height} · ${size.density}`
                   : `${pxW}×${pxH}`;
-                const key = `${preset.id}-${i}`;
+                const key = `${preset.id}-${originalIndex}`;
                 const isExcluded = excludedSizes.has(key);
 
                 if (isExcluded) return null;
