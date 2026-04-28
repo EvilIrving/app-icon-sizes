@@ -122,6 +122,11 @@ pnpm tauri build --target x86_64-pc-windows-msvc
 
 构建好的安装包在 `src-tauri/target/release/bundle/` 目录中。
 
+> 如果安装后 macOS 提示"Icon Size.app 已损坏，无法打开"，请运行以下命令移除隔离属性：
+> ```bash
+> xattr -rd com.apple.quarantine /Applications/Icon\ Size.app
+> ```
+
 ## 许可证
 
 MIT

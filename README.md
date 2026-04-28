@@ -122,6 +122,11 @@ pnpm tauri build --target x86_64-pc-windows-msvc
 
 Find the built installers in `src-tauri/target/release/bundle/`.
 
+> If macOS shows "Icon Size.app is damaged and can't be opened" after installation, run this to remove the quarantine attribute:
+> ```bash
+> xattr -rd com.apple.quarantine /Applications/Icon\ Size.app
+> ```
+
 ## License
 
 MIT

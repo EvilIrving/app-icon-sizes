@@ -37,12 +37,22 @@
     ],
     "category": "DeveloperTool",
     "shortDescription": "Generate app icons for multiple platforms",
-    "longDescription": "A cross-platform icon generator that creates icons for Android, iOS, Chrome Extension, and more."
+    "longDescription": "A cross-platform icon generator that creates icons for Android, iOS, Chrome Extension, and more.",
+    "macOS": {
+      "signingIdentity": "Apple Development: 894985722@qq.com (74NN3NSTYN)",
+      "notarization": {
+        "appleSecurityTeamId": "74NN3NSTYN",
+        "appleApi": {
+          "issuer": { "env": "APPLE_API_ISSUER" },
+          "key": { "env": "APPLE_API_KEY_PATH" },
+          "keyId": { "env": "APPLE_API_KEY_ID" }
+        }
+      }
+    }
   },
   "plugins": {
     "dialog": null,
     "fs": null,
     "opener": null,
     "notification": null
-  }
-}
+  }}
