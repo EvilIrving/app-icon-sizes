@@ -1,8 +1,8 @@
 [package]
-name = "icon-maker"
+name = "icon-sizes"
 version = "1.1.0"
 description = "Cross-platform icon generator"
-authors = ["Icon Maker Team"]
+authors = ["Icon Sizes Team"]
 edition = "2021"
 
 [build-dependencies]

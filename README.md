@@ -1,4 +1,4 @@
-# Icon Maker
+# Icon Sizes
 
 A desktop app that generates app icons for multiple platforms from a single source image. Built with Tauri, React, and TypeScript.
 
@@ -14,7 +14,7 @@ Drop in a 1024×1024 PNG, pick your target platforms, and get back a ZIP with al
 - Image sets with 1x/2x/3x or 1x/2x/3x/4x scales
 - Chrome extension icons
 
-![Icon Maker Screenshot](en.png)
+![Icon Sizes Screenshot](en.png)
 
 ## Platform details
 
@@ -70,7 +70,7 @@ pnpm tauri build
 ## How the code is organized
 
 ```
-icon-maker/
+icon-sizes/
 ├── src/                      # Frontend
 │   ├── core/
 │   │   ├── presets.ts        # Platform configs

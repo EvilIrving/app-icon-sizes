@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Icon Maker",
+  "productName": "Icon Sizes",
   "version": "1.1.0",
-  "identifier": "com.iconmaker.app",
+  "identifier": "com.iconsizes.app",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "Icon Maker - Cross Platform Icon Generator",
+        "title": "Icon Sizes - Cross Platform Icon Generator",
         "width": 1000,
         "height": 700,
         "resizable": true,

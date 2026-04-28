@@ -3,7 +3,7 @@ export type Language = 'en' | 'zh';
 export const translations = {
   en: {
     // App title and meta
-    appTitle: 'Icon Maker',
+    appTitle: 'Icon Sizes',
     appSubtitle: 'Generate App Icons for All Platforms',
 
     // Source section
@@ -71,7 +71,7 @@ export const translations = {
   },
   zh: {
     // App title and meta
-    appTitle: 'Icon Maker',
+    appTitle: 'Icon Sizes',
     appSubtitle: '为所有平台生成应用图标',
 
     // Source section

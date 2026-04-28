@@ -10,7 +10,7 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'icon-maker-language';
+const STORAGE_KEY = 'icon-sizes-language';
 
 function getSystemLanguage(): Language {
   if (typeof navigator !== 'undefined') {

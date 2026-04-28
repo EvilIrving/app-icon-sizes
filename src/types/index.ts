@@ -1,5 +1,5 @@
 /**
- * Centralized type definitions for Icon Maker
+ * Centralized type definitions for Icon Sizes
  * Re-exports from core modules and defines app-level types
  */
 

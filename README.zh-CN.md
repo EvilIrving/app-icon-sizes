@@ -1,4 +1,4 @@
-# Icon Maker
+# Icon Sizes
 
 一款桌面应用，从单张源图片生成多平台的应用图标。基于 Tauri、React 和 TypeScript 构建。
 
@@ -14,7 +14,7 @@
 - 图片集，支持 1x/2x/3x 或 1x/2x/3x/4x 缩放
 - Chrome 扩展图标
 
-![Icon Maker 截图](zh.png)
+![Icon Sizes 截图](zh.png)
 
 ## 平台详情
 
@@ -70,7 +70,7 @@ pnpm tauri build
 ## 代码结构
 
 ```
-icon-maker/
+icon-sizes/
 ├── src/                      # 前端
 │   ├── core/
 │   │   ├── presets.ts        # 平台配置

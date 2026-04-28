@@ -1533,8 +1533,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "icon-maker"
-version = "1.0.0"
+name = "icon-sizes"
+version = "1.1.0"
 dependencies = [
  "serde",
  "serde_json",
