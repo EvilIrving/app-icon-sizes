@@ -1,6 +1,6 @@
 [package]
 name = "icon-sizes"
-version = "1.1.0"
+version = "1.1.1"
 description = "Cross-platform icon generator"
 authors = ["Icon Sizes Team"]
 edition = "2021"
