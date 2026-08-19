@@ -6,6 +6,8 @@
 
 当前 Tauri 2.10 的配置 schema 不接受 `bundle.macOS.notarization`；公证应只通过 CI 构建进程的 `APPLE_API_ISSUER`、`APPLE_API_KEY`（Key ID）与 `APPLE_API_KEY_PATH` 环境变量启用。不要重新添加旧的 JSON 公证块。
 
+Tauri 构建会自动公证并 staple `.app`，但随后生成的 `.dmg` 只有 Developer ID 签名；仅验证 DMG 内的 app 会漏掉这一层。CI 必须在上传前额外对每个 DMG 执行 `notarytool submit --wait`、`stapler staple/validate` 和 `spctl --type open`。2026-08-20 首次从公开 Release 回下载验证时，正是靠 DMG 的 `spctl` 发现外层仍为 `Unnotarized Developer ID`。
+
 GitHub `APPLE` Environment 的六项发布 Secret 已于本次操作全部从这台 Mac 的有效凭证重新写入；仓库只记录 Secret 名称，不保存证书、私钥或密码。本条修正 2026-08-19 条目中“仍需创建 Developer ID 证书”以及旧签名身份的结论；是否完成 v1.1.2 发布以本次 CI 和最终 Gatekeeper 验证结果为准。
 
 ## docs/ 落地页去掉 AI 营销壳，改用真实应用截图 · 2026-08-19 17:58 · grok

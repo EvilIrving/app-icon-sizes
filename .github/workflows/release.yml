@@ -88,6 +88,24 @@ jobs:
           APPLE_API_KEY_PATH: ${{ format('{0}/AuthKey_{1}.p8', runner.temp, secrets.APPLE_API_KEY_ID) }}
         run: pnpm tauri build
 
+      - name: Notarize and staple macOS DMG
+        env:
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_KEY_PATH: ${{ format('{0}/AuthKey_{1}.p8', runner.temp, secrets.APPLE_API_KEY_ID) }}
+        run: |
+          for dmg in target/release/bundle/dmg/*.dmg; do
+            [ -f "$dmg" ] || exit 1
+            xcrun notarytool submit "$dmg" \
+              --issuer "$APPLE_API_ISSUER" \
+              --key-id "$APPLE_API_KEY" \
+              --key "$APPLE_API_KEY_PATH" \
+              --wait
+            xcrun stapler staple "$dmg"
+            xcrun stapler validate "$dmg"
+            spctl --assess --type open --context context:primary-signature --verbose=4 "$dmg"
+          done
+
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -134,7 +152,7 @@ jobs:
           done
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             dist-windows/icon-sizes-*.msi
@@ -143,6 +161,7 @@ jobs:
           body_path: .github/release-notes.md
           generate_release_notes: true
           fail_on_unmatched_files: true
+          overwrite_files: true
           draft: false
           prerelease: false
         env:
