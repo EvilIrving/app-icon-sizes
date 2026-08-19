@@ -1,10 +1,10 @@
 # Growth Context
 
-*Last updated: 2026-08-19*
+*Last updated: 2026-08-19 (copy pass)
 
 ## Product
 - **Name:** Icon Sizes
-- **One-liner:** Local desktop app that turns one PNG into all the app-icon sizes you need
+- **One-liner:** One PNG in. Every icon size out.
 - **What it does:** Drop in a 1024×1024 PNG, pick platforms (iOS/macOS, Android, image sets, Chrome extension, favicon, store images), export a ZIP. Runs fully on-device via Tauri; nothing is uploaded.
 - **Category:** cross-platform app icon generator / desktop icon tool
 

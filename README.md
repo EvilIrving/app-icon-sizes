@@ -1,133 +1,75 @@
 # Icon Sizes
 
-A desktop app that generates app icons for multiple platforms from a single source image. Built with Tauri, React, and TypeScript.
+Local desktop app that turns one PNG into app icons for iOS, macOS, Android, Chrome, and more. Free, MIT, no uploads.
 
-**[Website](https://evilirving.github.io/app-icon-sizes/)** · **[🇨🇳 中文版本](README.zh-CN.md)** · **[中文站点](https://evilirving.github.io/app-icon-sizes/zh/)**
+[![Release](https://img.shields.io/github/v/release/EvilIrving/app-icon-sizes)](https://github.com/EvilIrving/app-icon-sizes/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## What it does
+**[Website](https://evilirving.github.io/app-icon-sizes/)** · **[Download](https://github.com/EvilIrving/app-icon-sizes/releases/latest)** · **[中文说明](README.zh-CN.md)** · **[中文站点](https://evilirving.github.io/app-icon-sizes/zh/)**
 
-Drop in a 1024×1024 PNG, pick your target platforms, and get back a ZIP with all the sizes you need. No web service, no uploading to sketchy websites—runs locally on your machine.
+<!-- Screenshot placeholder: replace en.png and add a short demo GIF before a public launch. -->
+![Icon Sizes UI (placeholder)](en.png)
 
-**Supported outputs:**
-- iOS & macOS app icons (43 sizes across iPhone, iPad, watchOS, macOS)
-- Android launcher icons (mdpi through xxxhdpi)
-- Image sets with 1x/2x/3x or 1x/2x/3x/4x scales
-- Chrome extension icons
+## What it is
 
-<!-- Placeholder screenshots: replace en.png / add a short demo GIF before a public launch. -->
-![Icon Sizes Screenshot (placeholder)](en.png)
+Icon Sizes is for indie and mobile developers who need Asset Catalog / mipmap-ready icon sets without sending artwork to a website. Drop in a 1024×1024 PNG, pick platforms, export one ZIP. Processing stays on your machine (Tauri desktop app).
 
-## Platform details
+## Features
 
-### iOS & macOS
+- **Local-first**: resize and ZIP export on-device; nothing is uploaded
+- **Apple presets**: iPhone, iPad, macOS, and watchOS app icon sizes
+- **Android**: mdpi through xxxhdpi launcher icons (`ic_launcher` or custom name)
+- **Image sets**: 1x/2x/3x or 1x/2x/3x/4x, with `Contents.json` for iOS asset catalogs
+- **Chrome extension**: 16 / 32 / 48 / 128
+- **Favicon and store images**: additional export modes in the app
+- **iOS Asset Catalog export**: App Icon / Image Set oriented output where configured
+- **EN / 中文 UI**
 
-Generates the full set of 43 icon sizes:
+## Install
 
-**iPhone** – 8 sizes including app icons (60pt @2x/@3x), notifications (20pt), settings (29pt), and spotlight search (40pt)
+### Download (recommended)
 
-**iPad** – 9 sizes covering standard iPad, iPad Pro (83.5pt @2x), and the same auxiliary sizes as iPhone
+Grab the latest binary from [GitHub Releases](https://github.com/EvilIrving/app-icon-sizes/releases/latest):
 
-**watchOS** – 7 sizes for Apple Watch complications and the 1024pt App Store icon
+| Platform | Artifact |
+|---|---|
+| macOS (Apple Silicon) | `.dmg` |
+| Windows | `.msi` or NSIS `.exe` |
 
-**macOS** – 11 sizes from 16pt up to 1024pt
-
-### Android
-
-Exports to the standard mipmap folders:
-- mipmap-mdpi (48×48)
-- mipmap-hdpi (72×72)
-- mipmap-xhdpi (96×96)
-- mipmap-xxhdpi (144×144)
-- mipmap-xxxhdpi (192×192)
-
-You can customize the filename (defaults to `ic_launcher`).
-
-### Image Sets
-
-For iOS asset catalogs or Android drawable resources. Pick 3x scale (base, @2x, @3x) or 4x scale (adds @4x). Includes Contents.json for iOS. Filename is customizable.
-
-### Chrome Extension
-
-Four sizes: 16×16, 32×32, 48×48, 128×128
-
-## Getting started
-
-You'll need:
-- Node.js 18+ and pnpm
-- Rust (for Tauri builds) – install from [rustup.rs](https://rustup.rs)
-- Xcode Command Line Tools (macOS) or Visual Studio Build Tools (Windows)
-
-```bash
-# Install dependencies
-pnpm install
-
-# Run in development mode
-pnpm tauri dev
-
-# Build for production
-pnpm tauri build
-```
-
-## How the code is organized
-
-```
-icon-sizes/
-├── src/                      # Frontend
-│   ├── core/
-│   │   ├── presets.ts        # Platform configs
-│   │   ├── resize.ts         # Image resizing
-│   │   └── exporter.ts       # ZIP generation
-│   ├── components/           # UI components
-│   ├── App.tsx               # Main app
-│   └── App.css
-├── src-tauri/                # Tauri backend
-│   ├── src/
-│   │   └── main.rs
-│   ├── tauri.conf.json
-│   └── Cargo.toml
-├── package.json
-└── vite.config.ts
-```
-
-## Using the app
-
-1. Start with `pnpm tauri dev` or run the built app
-2. Drop a source image onto the upload area (1024×1024 PNG works best)
-3. Pick your platforms from the sidebar
-4. Tweak any options:
-   - Android: set a custom filename
-   - Image Sets: choose 3x or 4x scale, set filename
-5. Preview the generated icons in the main area
-6. Hit Export and pick where to save the ZIP
-
-## Under the hood
-
-- React 18 + TypeScript + Vite for the UI
-- Tauri 2.x for the desktop wrapper
-- Canvas API for image resizing (uses high-quality smoothing)
-- JSZip for ZIP generation
-- Tauri Dialog and FS plugins for file operations
-
-## Building for release
-
-### macOS
-```bash
-pnpm tauri build --target aarch64-apple-darwin  # Apple Silicon
-pnpm tauri build --target x86_64-apple-darwin   # Intel
-```
-
-### Windows
-```bash
-pnpm tauri build --target x86_64-pc-windows-msvc
-```
-
-Find the built installers in `src-tauri/target/release/bundle/`.
-
-> **Temporary (until Developer ID + notarization ships):** if macOS shows the app is damaged or can’t be opened after install, remove the quarantine attribute:
+> **macOS note (temporary):** Developer ID + notarization is prepared in CI but not verified on a clean Mac yet. If Gatekeeper blocks the app, clear quarantine once:
 > ```bash
 > xattr -rd com.apple.quarantine "/Applications/Icon Sizes.app"
 > ```
-> After a notarized Developer ID build, that workaround should not be needed.
+
+### Build from source
+
+Needs Node.js 18+, pnpm, Rust ([rustup](https://rustup.rs)), plus Xcode CLT (macOS) or VS Build Tools (Windows).
+
+```bash
+pnpm install
+pnpm tauri dev    # development
+pnpm tauri build  # production installers
+```
+
+Installers land under `src-tauri/target/release/bundle/`.
+
+## How to use
+
+1. Open the app (dev build or release binary)
+2. Drop a source PNG (1024×1024 works best)
+3. Select platforms in the sidebar
+4. Adjust options (Android filename, image-set scale, and so on)
+5. Preview in the grid, then export a ZIP
+
+## Project layout
+
+```
+src/           React UI, presets, resize, ZIP export
+src-tauri/     Tauri shell
+docs/          GitHub Pages landing site (EN + 中文)
+```
+
+Stack: React 18 + TypeScript + Vite, Tauri 2, Canvas resize (pica), JSZip.
 
 ## License
 
