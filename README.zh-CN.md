@@ -1,6 +1,8 @@
 # Icon Sizes
 
-本地桌面应用：一张 PNG 生成 iOS、macOS、Android、Chrome 等多平台应用图标。免费、MIT、不上传。
+**一张 PNG 进去，各平台图标尺寸出来。**
+
+本地桌面应用，覆盖 iOS、macOS、Android、Chrome 等。免费、MIT、不上传。
 
 [![Release](https://img.shields.io/github/v/release/EvilIrving/app-icon-sizes)](https://github.com/EvilIrving/app-icon-sizes/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)

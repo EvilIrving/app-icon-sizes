@@ -4,7 +4,8 @@
 
 ## Product
 - **Name:** Icon Sizes
-- **One-liner:** One PNG in. Every icon size out.
+- **One-liner / tagline (chosen):** One PNG in. Every icon size out.
+- **One-liner (zh):** 一张 PNG 进去，各平台图标尺寸出来。
 - **What it does:** Drop in a 1024×1024 PNG, pick platforms (iOS/macOS, Android, image sets, Chrome extension, favicon, store images), export a ZIP. Runs fully on-device via Tauri; nothing is uploaded.
 - **Category:** cross-platform app icon generator / desktop icon tool
 

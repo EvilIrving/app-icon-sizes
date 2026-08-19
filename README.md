@@ -1,6 +1,8 @@
 # Icon Sizes
 
-Local desktop app that turns one PNG into app icons for iOS, macOS, Android, Chrome, and more. Free, MIT, no uploads.
+**One PNG in. Every icon size out.**
+
+Local desktop app for iOS, macOS, Android, Chrome, and more. Free, MIT, no uploads.
 
 [![Release](https://img.shields.io/github/v/release/EvilIrving/app-icon-sizes)](https://github.com/EvilIrving/app-icon-sizes/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
