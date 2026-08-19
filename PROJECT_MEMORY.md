@@ -1,5 +1,9 @@
 # Project Memory
 
+## 苹果签名名词对照已写入 docs/apple-signing-names.md · 2026-08-19 18:00 · grok
+
+对外发 DMG 只需记住两件事：Developer ID Application（签名用的「章」）+ App Store Connect API Key / `.p8`（公证用的「工牌」）。Development、Installer、Mac App Distribution、Provisioning Profile 等对当前 GitHub 分发路径大多可忽略。完整中文对照表见 `docs/apple-signing-names.md`；回家实操步骤见 `prompts/home-machine-signing-notarization.md`。不要把 `.p8` / `.p12` / 密码写入记忆或文档。
+
 ## Safari 打不开 developer.apple.com 多因 Clash 拒绝全部 IPv6 · 2026-08-19 17:26 · grok
 
 在本机排查「Safari 无法打开 https://developer.apple.com/，提示服务器意外地断开了连接」时，已确认不是 Apple 官网宕机。

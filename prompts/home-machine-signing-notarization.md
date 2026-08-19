@@ -47,6 +47,7 @@
    - 尚未打 `v1.1.2` tag；等签名身份可用且 CI Secret 齐了再打
 
 7. 长期说明见仓库根目录 PROJECT_MEMORY.md（签名约定、Pages 落地站等）。
+8. 苹果一堆证书/公证名称对照（中文）：`docs/apple-signing-names.md`。
 
 ## 请你在这台家里 Mac 上按顺序做
 
