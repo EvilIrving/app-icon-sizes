@@ -77,11 +77,10 @@
   <div class="wrap">
     <header class="nav">
       <a class="brand" href="./">
-        <img src="../assets/logo.svg" width="36" height="36" alt="Icon Sizes 标志" />
+        <img src="../assets/logo.svg" width="28" height="28" alt="" />
         Icon Sizes
       </a>
       <nav class="nav-links" aria-label="主导航">
-        <a href="#about">介绍</a>
         <a href="#features">功能</a>
         <a href="#compare">对比</a>
         <a href="#install">安装</a>
@@ -93,75 +92,56 @@
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <div>
-          <div class="eyebrow">MIT · Tauri 桌面端 · 不上传</div>
+        <div class="hero-copy">
           <h1 id="hero-title">一张 PNG 进去，各平台图标尺寸出来。</h1>
           <p class="lead">
-            面向独立开发者与移动端开发者的免费桌面应用：多平台图标 ZIP，不必把设计稿上传到网站。
+            本地桌面应用，一次导出多平台图标 ZIP。MIT。不上传。
           </p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="https://github.com/EvilIrving/app-icon-sizes/releases/latest">下载最新版本</a>
-            <a class="btn btn-ghost" href="https://github.com/EvilIrving/app-icon-sizes">查看 GitHub</a>
+            <a class="btn btn-primary" href="https://github.com/EvilIrving/app-icon-sizes/releases/latest">下载</a>
+            <a class="btn btn-ghost" href="https://github.com/EvilIrving/app-icon-sizes">GitHub</a>
           </div>
-          <p class="fineprint">GitHub Releases 提供 macOS DMG（Apple Silicon）与 Windows MSI / EXE。</p>
+          <p class="meta">macOS（Apple Silicon）· Windows · 源码需 pnpm + Rust</p>
         </div>
         <figure class="shot">
-          <!-- 截图占位：growth visuals 后再换演示 GIF。 -->
           <img
             src="../assets/screenshot-zh.jpg"
-            width="1400"
-            height="759"
-            alt="Icon Sizes 界面：平台预设与图标预览网格"
+            width="1600"
+            height="867"
+            alt="Icon Sizes：平台预设、源图拖放区与图标预览网格"
             fetchpriority="high"
           />
         </figure>
       </section>
 
-      <section id="about" aria-labelledby="about-title">
-        <h2 id="about-title">这是什么</h2>
-        <p class="section-lead">
-          Icon Sizes 是一款本地运行的跨平台应用图标生成器（Tauri 桌面应用）：拖入 1024×1024 PNG，选择预设，导出一个 ZIP。MIT 免费开源，不上传图片。
-        </p>
-      </section>
-
       <section id="features" aria-labelledby="features-title">
-        <h2 id="features-title">你能得到什么</h2>
-        <p class="section-lead">
-          Icon Sizes 强调对发版真正有用的差异：本地处理、多平台预设、以及面向 Asset Catalog 的导出。
-        </p>
-        <div class="grid">
-          <article class="card">
-            <h3>本地优先</h3>
-            <p>本机缩放与导出。无账号、无云端中转、无意外上传。</p>
-          </article>
-          <article class="card">
-            <h3>多平台 ZIP</h3>
-            <p>一次导出 Apple 应用图标、Android mipmap、图片集、Chrome 扩展图标、Favicon 与商店图等。</p>
-          </article>
-          <article class="card">
-            <h3>面向 Asset Catalog</h3>
-            <p>相关导出附带 Contents.json，更容易放进 Xcode。</p>
-          </article>
-          <article class="card">
-            <h3>免费开源</h3>
-            <p>MIT 协议。可读源码、可 fork，也可用 pnpm + Rust 自行构建。</p>
-          </article>
-          <article class="card">
-            <h3>桌面应用</h3>
-            <p>基于 Tauri：拖放源图、侧边栏选平台、主区实时预览。</p>
-          </article>
-          <article class="card">
-            <h3>中英界面</h3>
-            <p>应用内支持中英文切换。</p>
-          </article>
-        </div>
+        <h2 id="features-title">导出目标</h2>
+        <ul class="platforms">
+          <li>iOS / macOS</li>
+          <li>Android</li>
+          <li>图片集</li>
+          <li>Chrome 扩展</li>
+          <li>Favicon</li>
+          <li>商店图</li>
+        </ul>
+        <ul class="points">
+          <li>
+            <strong>仅本地</strong>
+            <span>缩放与 ZIP 都在本机。无账号、不上云。</span>
+          </li>
+          <li>
+            <strong>一个 ZIP</strong>
+            <span>勾选平台，一次导出。iOS 相关导出含 Contents.json。</span>
+          </li>
+          <li>
+            <strong>桌面界面</strong>
+            <span>拖入 1024×1024 PNG，预览尺寸，导出。中 / EN。</span>
+          </li>
+        </ul>
       </section>
 
       <section id="compare" aria-labelledby="compare-title">
-        <h2 id="compare-title">和网页图标生成器比</h2>
-        <p class="section-lead">
-          Icon Sizes 是网页图标生成器的本地替代：用一次下载换来隐私和桌面端预设。
-        </p>
+        <h2 id="compare-title">和网页生成器比</h2>
         <table class="compare">
           <thead>
             <tr>
@@ -172,19 +152,19 @@
           </thead>
           <tbody>
             <tr>
-              <td>网页图标生成器</td>
+              <td>网页生成器</td>
               <td>不用安装</td>
               <td>通常要上传原图</td>
             </tr>
             <tr>
               <td>IDE / 设计插件</td>
-              <td>工作流集成深</td>
-              <td>常绑定单一平台或付费套件</td>
+              <td>集成深</td>
+              <td>常绑单一平台或付费</td>
             </tr>
             <tr>
-              <td><strong>Icon Sizes</strong></td>
-              <td>本地、多平台 ZIP、免费</td>
-              <td>需要下载桌面应用</td>
+              <td>Icon Sizes</td>
+              <td>本地、多平台、免费</td>
+              <td>需要下载桌面端</td>
             </tr>
           </tbody>
         </table>
@@ -192,18 +172,16 @@
 
       <section id="install" aria-labelledby="install-title">
         <h2 id="install-title">安装</h2>
-        <p class="section-lead">
-          Icon Sizes 通过 GitHub Releases 提供 macOS 与 Windows 安装包。源码构建需要 Node.js 18+、pnpm 与 Rust。
-        </p>
         <div class="install">
-          <article class="card">
-            <h3>下载</h3>
-            <p>打开最新 GitHub Release，选择 macOS DMG 或 Windows 安装包。</p>
-            <p style="margin-top:0.8rem"><a href="https://github.com/EvilIrving/app-icon-sizes/releases/latest">releases/latest</a></p>
-            <p class="fineprint" style="margin-top:0.8rem">信任说明：CI 已配置 Developer ID + 公证，但尚未在干净 Mac 上验证。在此之前首次打开可能需要清除隔离属性。</p>
+          <article>
+            <h3>发行包</h3>
+            <p>从 GitHub Releases 下载 macOS DMG 或 Windows 安装包。</p>
+            <p style="margin-top:0.55rem"><a href="https://github.com/EvilIrving/app-icon-sizes/releases/latest">releases/latest</a></p>
+            <p class="note">macOS：CI 已接 Developer ID + 公证；干净 Mac 上的 Gatekeeper 验证仍待完成。</p>
           </article>
-          <article class="card">
+          <article>
             <h3>源码构建</h3>
+            <p>需要 Node 18+、pnpm、Rust。</p>
             <pre>pnpm install
 pnpm tauri build</pre>
           </article>
@@ -213,37 +191,37 @@ pnpm tauri build</pre>
       <section id="faq" class="faq" aria-labelledby="faq-title">
         <h2 id="faq-title">常见问题</h2>
         <details>
-          <summary>Icon Sizes 免费且开源吗？</summary>
-          <p>是。免费，并以 MIT 协议开源。</p>
+          <summary>免费开源吗？</summary>
+          <p>是。MIT。</p>
         </details>
         <details>
-          <summary>Icon Sizes 会上传我的图片吗？</summary>
-          <p>不会。处理都在你的电脑上完成。</p>
+          <summary>会上传图片吗？</summary>
+          <p>不会。处理都在本机。</p>
         </details>
         <details>
-          <summary>Icon Sizes 能导出哪些平台？</summary>
-          <p>iOS/macOS 应用图标、Android 启动图标、图片集、Chrome 扩展图标，以及 Favicon 与商店图等选项。</p>
+          <summary>能导出哪些平台？</summary>
+          <p>iOS / macOS 应用图标、Android 启动图标、图片集、Chrome 扩展图标，以及 Favicon 与商店图等。</p>
         </details>
         <details>
-          <summary>Icon Sizes 和网页图标生成器有什么不同？</summary>
-          <p>不上传、桌面工作流、一次打出多平台预设；相关导出可带 Asset Catalog 元数据。</p>
+          <summary>为什么不是网站？</summary>
+          <p>不上传、桌面工作流、一次打出多平台 ZIP；相关导出可带 Asset Catalog 元数据。</p>
         </details>
         <details>
-          <summary>Icon Sizes 支持哪些操作系统？</summary>
-          <p>Release 提供 macOS（Apple Silicon DMG）与 Windows（MSI / EXE）；也可用 pnpm 与 Rust 从源码构建。</p>
+          <summary>支持哪些系统？</summary>
+          <p>Release 提供 macOS Apple Silicon DMG 与 Windows MSI / EXE；也可从源码构建。</p>
         </details>
       </section>
     </main>
 
     <footer class="footer">
       <div>
-        Icon Sizes · <a href="https://github.com/EvilIrving/app-icon-sizes/blob/main/LICENSE">MIT</a> ·
+        Icon Sizes ·
+        <a href="https://github.com/EvilIrving/app-icon-sizes/blob/main/LICENSE">MIT</a> ·
         <a href="https://github.com/EvilIrving/app-icon-sizes">GitHub</a> ·
         <a href="https://github.com/EvilIrving/app-icon-sizes/releases">Releases</a>
       </div>
       <div>
-        <a href="../" hreflang="en">English</a> ·
-        本地优先：图片处理留在本机
+        <a href="../" hreflang="en">English</a>
       </div>
     </footer>
   </div>

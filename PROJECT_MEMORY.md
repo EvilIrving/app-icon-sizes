@@ -1,5 +1,9 @@
 # Project Memory
 
+## docs/ 落地页去掉 AI 营销壳，改用真实应用截图 · 2026-08-19 17:58 · grok
+
+落地页原先偏「紫橙渐变 CTA + 光斑背景 + 六宫格卖点卡 + 假 DMG 风英雄图」，观感像通用 AI 模板。已改成与应用一致的咖啡棕平面排版：实心咖啡深色主按钮、窄栏、三条功能要点、平台标签；英雄区换成根目录 `en.png` / `zh.png` 压成的真实界面截图（`docs/assets/screenshot-*.jpg`）。本条修正同日「截图暂用压缩 JPG 占位 / logo 紫橙点缀驱动整页」的观感约定——logo 仍可保留紫橙，但页面主色与组件应跟应用 UI，不跟 logo 渐变。
+
 ## 苹果签名名词对照已写入 docs/apple-signing-names.md · 2026-08-19 18:00 · grok
 
 对外发 DMG 只需记住两件事：Developer ID Application（签名用的「章」）+ App Store Connect API Key / `.p8`（公证用的「工牌」）。Development、Installer、Mac App Distribution、Provisioning Profile 等对当前 GitHub 分发路径大多可忽略。完整中文对照表见 `docs/apple-signing-names.md`；回家实操步骤见 `prompts/home-machine-signing-notarization.md`。不要把 `.p8` / `.p12` / 密码写入记忆或文档。

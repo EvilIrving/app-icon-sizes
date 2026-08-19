@@ -91,11 +91,10 @@
   <div class="wrap">
     <header class="nav">
       <a class="brand" href="./">
-        <img src="assets/logo.svg" width="36" height="36" alt="Icon Sizes logo" />
+        <img src="assets/logo.svg" width="28" height="28" alt="" />
         Icon Sizes
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="#about">About</a>
         <a href="#features">Features</a>
         <a href="#compare">Compare</a>
         <a href="#install">Install</a>
@@ -107,75 +106,56 @@
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <div>
-          <div class="eyebrow">MIT · Tauri desktop · no uploads</div>
+        <div class="hero-copy">
           <h1 id="hero-title">One PNG in. Every icon size out.</h1>
           <p class="lead">
-            Free desktop app for indie and mobile developers who need multi-platform icon ZIPs without sending artwork to a website.
+            Local desktop app for multi-platform icon ZIPs. MIT. No uploads.
           </p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="https://github.com/EvilIrving/app-icon-sizes/releases/latest">Download latest release</a>
-            <a class="btn btn-ghost" href="https://github.com/EvilIrving/app-icon-sizes">View on GitHub</a>
+            <a class="btn btn-primary" href="https://github.com/EvilIrving/app-icon-sizes/releases/latest">Download</a>
+            <a class="btn btn-ghost" href="https://github.com/EvilIrving/app-icon-sizes">GitHub</a>
           </div>
-          <p class="fineprint">macOS DMG (Apple Silicon) and Windows MSI / EXE on GitHub Releases.</p>
+          <p class="meta">macOS (Apple Silicon) · Windows · source via pnpm + Rust</p>
         </div>
         <figure class="shot">
-          <!-- Placeholder screenshot until a fresh demo GIF is added (growth visuals). -->
           <img
             src="assets/screenshot-en.jpg"
-            width="1400"
-            height="762"
-            alt="Icon Sizes app showing platform presets and generated icon previews"
+            width="1600"
+            height="871"
+            alt="Icon Sizes: platform presets, source drop zone, and icon preview grid"
             fetchpriority="high"
           />
         </figure>
       </section>
 
-      <section id="about" aria-labelledby="about-title">
-        <h2 id="about-title">What it is</h2>
-        <p class="section-lead">
-          Icon Sizes is a cross-platform app icon generator that runs as a local Tauri desktop app: drop in a 1024×1024 PNG, pick presets, export one ZIP. It is free under MIT and does not upload your images.
-        </p>
-      </section>
-
       <section id="features" aria-labelledby="features-title">
-        <h2 id="features-title">What you get</h2>
-        <p class="section-lead">
-          Icon Sizes focuses on the differentiators that matter for shipping icons: local processing, multi-platform presets, and Asset Catalog friendly output.
-        </p>
-        <div class="grid">
-          <article class="card">
-            <h3>Local-first</h3>
-            <p>Resize and ZIP export on-device. No account, no cloud round-trip, no surprise uploads.</p>
-          </article>
-          <article class="card">
-            <h3>Multi-platform ZIP</h3>
-            <p>Apple app icons, Android mipmaps, image sets, Chrome extension icons, favicon and store options in one export.</p>
-          </article>
-          <article class="card">
-            <h3>Asset Catalog friendly</h3>
-            <p>Includes Contents.json for iOS-oriented exports so the result drops into Xcode more cleanly.</p>
-          </article>
-          <article class="card">
-            <h3>Free and open source</h3>
-            <p>MIT licensed. Read the code, fork it, or build from source with pnpm and Rust.</p>
-          </article>
-          <article class="card">
-            <h3>Desktop, not a tab</h3>
-            <p>Tauri shell with drag-and-drop workflow and a live preview grid.</p>
-          </article>
-          <article class="card">
-            <h3>Bilingual UI</h3>
-            <p>English and Chinese interface for day-to-day use.</p>
-          </article>
-        </div>
+        <h2 id="features-title">Export targets</h2>
+        <ul class="platforms">
+          <li>iOS / macOS</li>
+          <li>Android</li>
+          <li>Image sets</li>
+          <li>Chrome extension</li>
+          <li>Favicon</li>
+          <li>Store images</li>
+        </ul>
+        <ul class="points">
+          <li>
+            <strong>Local-only</strong>
+            <span>Resize and ZIP on your machine. No account, no cloud.</span>
+          </li>
+          <li>
+            <strong>One ZIP</strong>
+            <span>Pick platforms, export once. iOS exports include Contents.json.</span>
+          </li>
+          <li>
+            <strong>Desktop UI</strong>
+            <span>Drop a 1024×1024 PNG, preview sizes, export. EN / 中文.</span>
+          </li>
+        </ul>
       </section>
 
       <section id="compare" aria-labelledby="compare-title">
-        <h2 id="compare-title">Compared with web icon generators</h2>
-        <p class="section-lead">
-          Icon Sizes is a local alternative to web app-icon generators: you trade zero-install convenience for privacy and desktop presets.
-        </p>
+        <h2 id="compare-title">Compared with web generators</h2>
         <table class="compare">
           <thead>
             <tr>
@@ -186,19 +166,19 @@
           </thead>
           <tbody>
             <tr>
-              <td>Web icon generators</td>
-              <td>Zero install</td>
-              <td>You upload source art to a third party</td>
+              <td>Web generators</td>
+              <td>No install</td>
+              <td>Upload source art</td>
             </tr>
             <tr>
               <td>IDE / design plugins</td>
-              <td>Deep workflow integration</td>
-              <td>Often tied to one platform or a paid suite</td>
+              <td>Deep integration</td>
+              <td>Often one platform or paid</td>
             </tr>
             <tr>
-              <td><strong>Icon Sizes</strong></td>
-              <td>Local, multi-platform ZIP, free</td>
-              <td>Requires downloading a desktop app</td>
+              <td>Icon Sizes</td>
+              <td>Local, multi-platform, free</td>
+              <td>Desktop download</td>
             </tr>
           </tbody>
         </table>
@@ -206,18 +186,16 @@
 
       <section id="install" aria-labelledby="install-title">
         <h2 id="install-title">Install</h2>
-        <p class="section-lead">
-          Icon Sizes ships via GitHub Releases for macOS and Windows. Source builds need Node.js 18+, pnpm, and Rust.
-        </p>
         <div class="install">
-          <article class="card">
-            <h3>Download</h3>
-            <p>Open the latest GitHub Release and pick macOS DMG or Windows installer.</p>
-            <p style="margin-top:0.8rem"><a href="https://github.com/EvilIrving/app-icon-sizes/releases/latest">releases/latest</a></p>
-            <p class="fineprint" style="margin-top:0.8rem">Trust note: Developer ID + notarization is configured in CI but not verified on a clean Mac yet. Until then you may need to clear quarantine on first open.</p>
+          <article>
+            <h3>Release</h3>
+            <p>Grab the latest macOS DMG or Windows installer from GitHub Releases.</p>
+            <p style="margin-top:0.55rem"><a href="https://github.com/EvilIrving/app-icon-sizes/releases/latest">releases/latest</a></p>
+            <p class="note">macOS: Developer ID + notarization is wired in CI; clean-Mac Gatekeeper verification is still pending.</p>
           </article>
-          <article class="card">
-            <h3>Build from source</h3>
+          <article>
+            <h3>From source</h3>
+            <p>Node 18+, pnpm, Rust.</p>
             <pre>pnpm install
 pnpm tauri build</pre>
           </article>
@@ -227,37 +205,37 @@ pnpm tauri build</pre>
       <section id="faq" class="faq" aria-labelledby="faq-title">
         <h2 id="faq-title">FAQ</h2>
         <details>
-          <summary>Is Icon Sizes free and open source?</summary>
-          <p>Yes. It is free under the MIT license.</p>
+          <summary>Is it free and open source?</summary>
+          <p>Yes. MIT license.</p>
         </details>
         <details>
-          <summary>Does Icon Sizes upload my images?</summary>
-          <p>No. Processing stays on your computer.</p>
+          <summary>Does it upload my images?</summary>
+          <p>No. Everything stays on your computer.</p>
         </details>
         <details>
-          <summary>Which platforms can Icon Sizes export?</summary>
-          <p>iOS and macOS app icons, Android launcher icons, image sets, Chrome extension icons, plus favicon and store image options.</p>
+          <summary>Which platforms can it export?</summary>
+          <p>iOS / macOS app icons, Android launchers, image sets, Chrome extension icons, favicon and store options.</p>
         </details>
         <details>
-          <summary>How is Icon Sizes different from web icon generators?</summary>
-          <p>No upload requirement, desktop workflow, and multi-platform presets packed into one ZIP, including Asset Catalog metadata where relevant.</p>
+          <summary>Why not a website?</summary>
+          <p>No upload requirement, desktop workflow, multi-platform ZIP with Asset Catalog metadata where relevant.</p>
         </details>
         <details>
-          <summary>What operating systems does Icon Sizes run on?</summary>
-          <p>macOS (Apple Silicon DMG) and Windows (MSI / EXE) from Releases, or build from source with pnpm and Rust.</p>
+          <summary>Which OS?</summary>
+          <p>macOS Apple Silicon DMG and Windows MSI / EXE from Releases, or build from source.</p>
         </details>
       </section>
     </main>
 
     <footer class="footer">
       <div>
-        Icon Sizes · <a href="https://github.com/EvilIrving/app-icon-sizes/blob/main/LICENSE">MIT</a> ·
+        Icon Sizes ·
+        <a href="https://github.com/EvilIrving/app-icon-sizes/blob/main/LICENSE">MIT</a> ·
         <a href="https://github.com/EvilIrving/app-icon-sizes">GitHub</a> ·
         <a href="https://github.com/EvilIrving/app-icon-sizes/releases">Releases</a>
       </div>
       <div>
-        <a href="zh/" hreflang="zh-CN">中文</a> ·
-        Local-first: image processing stays on your machine
+        <a href="zh/" hreflang="zh-CN">中文</a>
       </div>
     </footer>
   </div>
