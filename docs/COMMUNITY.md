@@ -10,7 +10,7 @@ Solo-maintainer friendly. Honest engagement only. Facts from `GROWTH.md`.
 - [x] `SECURITY.md`
 - [x] GitHub topics (icons, tauri, ios, android, …)
 - [x] Changelog / release notes scaffolding
-- [ ] `good first issue` tickets (create after this lands)
+- [x] `good first issue` tickets (#1–#4)
 - [ ] Private vulnerability reporting enabled in GitHub Settings (optional toggle)
 
 ## Health signals to watch
