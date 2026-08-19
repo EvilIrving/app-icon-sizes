@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://evilirving.github.io/app-icon-sizes/sitemap.xml

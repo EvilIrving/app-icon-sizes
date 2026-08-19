@@ -2,7 +2,7 @@
 
 A desktop app that generates app icons for multiple platforms from a single source image. Built with Tauri, React, and TypeScript.
 
-**[🇨🇳 中文版本](README.zh-CN.md)**
+**[Website](https://evilirving.github.io/app-icon-sizes/)** · **[🇨🇳 中文版本](README.zh-CN.md)** · **[中文站点](https://evilirving.github.io/app-icon-sizes/zh/)**
 
 ## What it does
 

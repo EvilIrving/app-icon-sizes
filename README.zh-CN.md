@@ -2,7 +2,7 @@
 
 一款桌面应用，从单张源图片生成多平台的应用图标。基于 Tauri、React 和 TypeScript 构建。
 
-**[🇺🇸 English Version](README.md)**
+**[网站](https://evilirving.github.io/app-icon-sizes/zh/)** · **[🇺🇸 English](README.md)** · **[English site](https://evilirving.github.io/app-icon-sizes/)**
 
 ## 功能
 
