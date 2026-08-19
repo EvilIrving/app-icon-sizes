@@ -1,3 +1,24 @@
+## v1.1.2 发布准备（未打 tag）· 2026-08-19 · grok
+
+### 已做
+- 版本 bump → `1.1.2`（package.json / Cargo.toml / tauri.conf.json）
+- `signingIdentity` 改为 `Developer ID Application: 董 少年 (74NN3NSTYN)`（证书创建后若 Common Name 不同需再改）
+- 补 `LICENSE`（MIT）、`CHANGELOG.md`、`.github/release-notes.md`
+- README 截图标为占位；隔离属性 workaround 注明为临时
+- GitHub topics 已用 `gh` 写入
+- **未打 `v1.1.2` tag**：本机尚无 Developer ID Application 身份；等证书导出并更新 `APPLE_CERTIFICATE` 后再发
+
+### 网站
+- 无独立落地页 / 未启用 GitHub Pages；根目录 `index.html` 只是 Vite 应用壳
+
+### 下一步（你）
+1. Apple Developer → 创建 **Developer ID Application** 证书并安装
+2. 导出 p12，更新 APPLE 环境的 `APPLE_CERTIFICATE`（及密码若变更）
+3. `security find-identity -v -p codesigning` 核对 CN，必要时改 `tauri.conf.json`
+4. `git tag v1.1.2 && git push origin v1.1.2`，干净 Mac 下载验证 Gatekeeper
+
+---
+
 ## macOS 签名+公证配置 · 2026-04-29 02:09 · claude
 
 ### 做了什么

@@ -14,7 +14,8 @@ Drop in a 1024×1024 PNG, pick your target platforms, and get back a ZIP with al
 - Image sets with 1x/2x/3x or 1x/2x/3x/4x scales
 - Chrome extension icons
 
-![Icon Sizes Screenshot](en.png)
+<!-- Placeholder screenshots: replace en.png / add a short demo GIF before a public launch. -->
+![Icon Sizes Screenshot (placeholder)](en.png)
 
 ## Platform details
 
@@ -122,11 +123,12 @@ pnpm tauri build --target x86_64-pc-windows-msvc
 
 Find the built installers in `src-tauri/target/release/bundle/`.
 
-> If macOS shows "Icon Size.app is damaged and can't be opened" after installation, run this to remove the quarantine attribute:
+> **Temporary (until Developer ID + notarization ships):** if macOS shows the app is damaged or can’t be opened after install, remove the quarantine attribute:
 > ```bash
-> xattr -rd com.apple.quarantine /Applications/Icon\ Size.app
+> xattr -rd com.apple.quarantine "/Applications/Icon Sizes.app"
 > ```
+> After a notarized Developer ID build, that workaround should not be needed.
 
 ## License
 
-MIT
+[MIT](LICENSE)

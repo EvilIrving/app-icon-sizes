@@ -14,7 +14,8 @@
 - 图片集，支持 1x/2x/3x 或 1x/2x/3x/4x 缩放
 - Chrome 扩展图标
 
-![Icon Sizes 截图](zh.png)
+<!-- 截图占位：对外宣传前请替换 zh.png，并补一张短演示 GIF。 -->
+![Icon Sizes 截图（占位）](zh.png)
 
 ## 平台详情
 
@@ -122,11 +123,12 @@ pnpm tauri build --target x86_64-pc-windows-msvc
 
 构建好的安装包在 `src-tauri/target/release/bundle/` 目录中。
 
-> 如果安装后 macOS 提示"Icon Size.app 已损坏，无法打开"，请运行以下命令移除隔离属性：
+> **临时方案（等 Developer ID + 公证就绪前）：** 若安装后 macOS 提示应用已损坏或无法打开，可移除隔离属性：
 > ```bash
-> xattr -rd com.apple.quarantine /Applications/Icon\ Size.app
+> xattr -rd com.apple.quarantine "/Applications/Icon Sizes.app"
 > ```
+> 公证通过的 Developer ID 构建发布后，一般不再需要这条命令。
 
 ## 许可证
 
-MIT
+[MIT](LICENSE)
