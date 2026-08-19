@@ -18,3 +18,5 @@ Prep release for Gatekeeper-friendly macOS distribution (Developer ID signing + 
 
 ### Verify on macOS
 Download the DMG from this release and open the app. Gatekeeper should not require an `xattr` quarantine workaround. If it still does, check the Actions log: the certificate may not be a valid Developer ID Application identity, or notarization failed.
+
+If Icon Sizes helps you ship, a GitHub star makes it easier for others to find. Issues and PRs welcome via [CONTRIBUTING.md](../CONTRIBUTING.md).

@@ -1,0 +1,55 @@
+name: Bug report
+description: Something already documented or shown in the UI does not work
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. Please fill every section you can. Local-first behavior (no upload) is intentional.
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: GitHub Release tag or `package.json` version (e.g. 1.1.1)
+      placeholder: "1.1.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Windows
+        - Other / from source
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the app
+        2. Drop a PNG
+        3. Select …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: extras
+    attributes:
+      label: Screenshots / logs / ZIP notes
+      description: Optional. Do not attach secrets.

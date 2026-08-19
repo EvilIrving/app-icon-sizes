@@ -73,6 +73,12 @@ docs/          GitHub Pages 落地页（中英）
 
 技术栈：React 18 + TypeScript + Vite、Tauri 2、Canvas 缩放（pica）、JSZip。
 
+## 参与贡献
+
+开发与 PR 约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。安全问题请看 [SECURITY.md](SECURITY.md)。
+
+如果这个工具对你有用，点个 GitHub Star 能让更多人发现它。
+
 ## 许可证
 
 [MIT](LICENSE)

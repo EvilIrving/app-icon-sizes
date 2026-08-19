@@ -73,6 +73,12 @@ docs/          GitHub Pages landing site (EN + 中文)
 
 Stack: React 18 + TypeScript + Vite, Tauri 2, Canvas resize (pica), JSZip.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, PR expectations, and how to file bugs vs features. Security notes live in [SECURITY.md](SECURITY.md).
+
+If Icon Sizes helps you ship, a GitHub star makes it easier for others to find.
+
 ## License
 
 [MIT](LICENSE)
