@@ -1,3 +1,18 @@
+## 落地页 GitHub Pages · 2026-08-19 · grok
+
+### 做了什么
+- `docs/` 单页落地站：英文 `/` + 中文 `/zh/`
+- 视觉对齐应用咖啡棕配色 + logo 紫橙点缀；截图用压缩 JPG 占位
+- SEO：title/description/canonical/hreflang、`SoftwareApplication` + `FAQPage` JSON-LD、`robots.txt` / `sitemap.xml`
+- 启用 Pages：`main` + `/docs` → https://evilirving.github.io/app-icon-sizes/
+- 仓库 homepage 已指向该地址；写了 `GROWTH.md`
+
+### 未做
+- 独立自定义域名
+- 新演示 GIF（仍用现有截图占位）
+
+---
+
 ## v1.1.2 发布准备（未打 tag）· 2026-08-19 · grok
 
 ### 已做
