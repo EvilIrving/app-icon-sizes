@@ -1,5 +1,11 @@
 # Project Memory
 
+## macOS 发布凭证已统一到 QZZ878S3NS 团队 · 2026-08-20 00:05 · codex
+
+这台 Mac 已确认存在可用且含私钥的 `Developer ID Application: TIANBAO DONG (QZZ878S3NS)`，证书有效期至 2031-05-04。App Store Connect API Key 也已通过 `notarytool history` 实际鉴权成功。`src-tauri/tauri.conf.json` 的 `signingIdentity` 与 `appleSecurityTeamId` 因此统一改为 QZZ878S3NS；旧的 74NN3NSTYN Developer ID 身份在本机不存在，不能继续用于发布签名。
+
+GitHub `APPLE` Environment 的六项发布 Secret 已于本次操作全部从这台 Mac 的有效凭证重新写入；仓库只记录 Secret 名称，不保存证书、私钥或密码。本条修正 2026-08-19 条目中“仍需创建 Developer ID 证书”以及旧签名身份的结论；是否完成 v1.1.2 发布以本次 CI 和最终 Gatekeeper 验证结果为准。
+
 ## docs/ 落地页去掉 AI 营销壳，改用真实应用截图 · 2026-08-19 17:58 · grok
 
 落地页原先偏「紫橙渐变 CTA + 光斑背景 + 六宫格卖点卡 + 假 DMG 风英雄图」，观感像通用 AI 模板。已改成与应用一致的咖啡棕平面排版：实心咖啡深色主按钮、窄栏、三条功能要点、平台标签；英雄区换成根目录 `en.png` / `zh.png` 压成的真实界面截图（`docs/assets/screenshot-*.jpg`）。本条修正同日「截图暂用压缩 JPG 占位 / logo 紫橙点缀驱动整页」的观感约定——logo 仍可保留紫橙，但页面主色与组件应跟应用 UI，不跟 logo 渐变。
