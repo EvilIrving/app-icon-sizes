@@ -103,6 +103,8 @@ jobs:
       actions: read
       contents: write
     steps:
+      - uses: actions/checkout@v4
+
       - name: Download Windows artifacts
         uses: actions/download-artifact@v4
         with:
@@ -131,8 +133,6 @@ jobs:
             mv "$f" "dist-macos/icon-sizes-$base"
           done
 
-      - uses: actions/checkout@v4
-
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -142,6 +142,7 @@ jobs:
             dist-macos/icon-sizes-*.dmg
           body_path: .github/release-notes.md
           generate_release_notes: true
+          fail_on_unmatched_files: true
           draft: false
           prerelease: false
         env:
