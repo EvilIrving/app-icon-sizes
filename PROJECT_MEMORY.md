@@ -2,7 +2,9 @@
 
 ## macOS 发布凭证已统一到 QZZ878S3NS 团队 · 2026-08-20 00:05 · codex
 
-这台 Mac 已确认存在可用且含私钥的 `Developer ID Application: TIANBAO DONG (QZZ878S3NS)`，证书有效期至 2031-05-04。App Store Connect API Key 也已通过 `notarytool history` 实际鉴权成功。`src-tauri/tauri.conf.json` 的 `signingIdentity` 与 `appleSecurityTeamId` 因此统一改为 QZZ878S3NS；旧的 74NN3NSTYN Developer ID 身份在本机不存在，不能继续用于发布签名。
+这台 Mac 已确认存在可用且含私钥的 `Developer ID Application: TIANBAO DONG (QZZ878S3NS)`，证书有效期至 2031-05-04。App Store Connect API Key 也已通过 `notarytool history` 实际鉴权成功。`src-tauri/tauri.conf.json` 的 `signingIdentity` 因此改为这张 QZZ878S3NS 证书；旧的 74NN3NSTYN Developer ID 身份在本机不存在，不能继续用于发布签名。
+
+当前 Tauri 2.10 的配置 schema 不接受 `bundle.macOS.notarization`；公证应只通过 CI 构建进程的 `APPLE_API_ISSUER`、`APPLE_API_KEY`（Key ID）与 `APPLE_API_KEY_PATH` 环境变量启用。不要重新添加旧的 JSON 公证块。
 
 GitHub `APPLE` Environment 的六项发布 Secret 已于本次操作全部从这台 Mac 的有效凭证重新写入；仓库只记录 Secret 名称，不保存证书、私钥或密码。本条修正 2026-08-19 条目中“仍需创建 Developer ID 证书”以及旧签名身份的结论；是否完成 v1.1.2 发布以本次 CI 和最终 Gatekeeper 验证结果为准。
 

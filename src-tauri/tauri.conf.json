@@ -39,15 +39,7 @@
     "shortDescription": "Generate app icons for multiple platforms",
     "longDescription": "A cross-platform icon generator that creates icons for Android, iOS, Chrome Extension, and more.",
     "macOS": {
-      "signingIdentity": "Developer ID Application: TIANBAO DONG (QZZ878S3NS)",
-      "notarization": {
-        "appleSecurityTeamId": "QZZ878S3NS",
-        "appleApi": {
-          "issuer": { "env": "APPLE_API_ISSUER" },
-          "key": { "env": "APPLE_API_KEY_PATH" },
-          "keyId": { "env": "APPLE_API_KEY_ID" }
-        }
-      }
+      "signingIdentity": "Developer ID Application: TIANBAO DONG (QZZ878S3NS)"
     }
   },
   "plugins": {
