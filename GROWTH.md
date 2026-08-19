@@ -1,6 +1,6 @@
 # Growth Context
 
-*Last updated: 2026-08-19 (copy pass)
+*Last updated: 2026-08-19 (web pass)
 
 ## Product
 - **Name:** Icon Sizes
