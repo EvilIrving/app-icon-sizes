@@ -2,29 +2,28 @@
 
 ## [1.1.2] - 2026-08-20
 
-macOS **Developer ID Application** signing and notarization are verified against the public Release DMG with Apple `stapler` and Gatekeeper `spctl`.
+Mac 版可以正常双击安装了：已完成苹果签名和公证。
 
-### Added
-- MIT `LICENSE` file
-- macOS distribution signing/notarization config wired for CI (`APPLE` environment secrets)
+### 这次有什么
 
-### Changed
-- macOS `signingIdentity` switched from Apple Development to Developer ID Application (replace the Common Name if your certificate string differs)
-- README screenshot slots marked as placeholders until refreshed assets land
+- 补上了 MIT 开源许可文件
+- Mac 安装包按正式分发方式签名并公证
+- 发布前会自动检查 Mac 安装包是否能被系统正常打开
 
-### Verified
-- The public DMG and bundled app both carry valid stapled notarization tickets
-- Gatekeeper reports `accepted` with source `Notarized Developer ID`
+### 下载
+
+- Mac：`.dmg`（Apple 芯片）
+- Windows：`.msi` / `.exe`
 
 ## [1.1.1] - 2026-04-28
 
-- Windows + macOS (Apple Silicon) installers via GitHub Releases
-- CI release workflow fixes for permissions and renamed artifacts
+- 提供 Windows 和 Mac（Apple 芯片）安装包
+- 修复发布流程里的一些打包问题
 
 ## [1.1.0] - 2026-03-12
 
-- iOS Asset Catalog App Icon and Image Set export support
+- 支持导出 iOS 应用图标和图片集常用结构
 
 ## [1.0.0] - 2026-03-07
 
-- Initial public release builds
+- 首次公开发布

@@ -2,79 +2,72 @@
 
 **一张 PNG 进去，各平台图标尺寸出来。**
 
-本地桌面应用，覆盖 iOS、macOS、Android、Chrome 等。免费、MIT、不上传。
+做 App 要准备一堆图标尺寸？把原图丢进来，勾上平台，导出一个压缩包就行。免费桌面应用，支持 Mac 和 Windows。
 
 [![Release](https://img.shields.io/github/v/release/EvilIrving/app-icon-sizes)](https://github.com/EvilIrving/app-icon-sizes/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **[网站](https://evilirving.github.io/app-icon-sizes/zh/)** · **[下载](https://github.com/EvilIrving/app-icon-sizes/releases/latest)** · **[English](README.md)** · **[English site](https://evilirving.github.io/app-icon-sizes/)**
 
-<!-- 截图占位：对外宣传前请替换 zh.png，并补一张短演示 GIF。 -->
-![Icon Sizes 界面（占位）](zh.png)
+![Icon Sizes](zh.png)
 
-## 这是什么
+## 这是什么？
 
-面向不想把设计稿上传到陌生网站、又需要 Asset Catalog / mipmap 结构的独立开发者与移动端开发者。拖入 1024×1024 PNG，勾选平台，导出一个 ZIP。处理全程在本地（Tauri 桌面应用）。
+上架 App 时，每个平台都要同一张图标的很多尺寸。Icon Sizes 帮你一次做完。
 
-## 功能
+1. 打开软件
+2. 拖进你的图标原图（建议 1024×1024 的 PNG）
+3. 勾上要用的平台
+4. 导出一个压缩包，结束
 
-- **本地优先**：本机缩放与 ZIP 导出，不上传
-- **Apple 预设**：iPhone、iPad、macOS、watchOS 应用图标尺寸
-- **Android**：mdpi 到 xxxhdpi 启动图标（默认 `ic_launcher`，可改名）
-- **图片集**：1x/2x/3x 或 1x/2x/3x/4x，并带 iOS 用的 `Contents.json`
-- **Chrome 扩展**：16 / 32 / 48 / 128
-- **Favicon 与商店图**：应用内另有对应导出模式
-- **iOS Asset Catalog 导出**：按配置输出 App Icon / Image Set 结构
-- **中英界面**
+完全免费。装一次，以后随时用。
+
+## 能导出什么？
+
+- iPhone / iPad / Mac 应用图标
+- 安卓启动图标
+- 多倍图（1x / 2x / 3x 等）
+- Chrome 扩展图标
+- 网站图标（favicon）
+- 商店图
+
+界面支持中文和英文。
 
 ## 安装
 
-### 下载（推荐）
+去 [GitHub Releases](https://github.com/EvilIrving/app-icon-sizes/releases/latest) 下载最新版：
 
-从 [GitHub Releases](https://github.com/EvilIrving/app-icon-sizes/releases/latest) 获取安装包：
-
-| 平台 | 产物 |
+| 电脑 | 下哪个文件 |
 |---|---|
-| macOS（Apple Silicon） | `.dmg` |
-| Windows | `.msi` 或 NSIS `.exe` |
+| Mac（Apple 芯片） | `.dmg` |
+| Windows | `.msi` 或 `.exe` |
 
-> **macOS：** DMG 和其中的 App 均使用 Developer ID 签名并完成 Apple 公证；CI 会在发布前验证两层公证票据与 Gatekeeper 状态。
+Mac 版已经过苹果公证，像普通软件一样双击安装即可。
 
-### 源码构建
+## 怎么用？
 
-需要 Node.js 18+、pnpm、Rust（[rustup](https://rustup.rs)），以及 macOS 的 Xcode 命令行工具或 Windows 的 VS Build Tools。
+1. 下载并安装
+2. 打开 Icon Sizes
+3. 把 PNG 拖进软件
+4. 在左侧勾选平台
+5. 预览一下，然后导出压缩包
+
+## 想自己编译？（可选）
+
+一般用户直接下载安装包就够了。
+
+如果你想自己编译，需要 Node.js 18+、pnpm 和 Rust。Mac 还要装 Xcode 命令行工具，Windows 要装 Visual Studio Build Tools。具体步骤见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ```bash
 pnpm install
-pnpm tauri dev    # 开发
-pnpm tauri build  # 生产安装包
+pnpm tauri build
 ```
-
-安装包在 `src-tauri/target/release/bundle/`。
-
-## 使用
-
-1. 打开应用（开发构建或 Release 安装包）
-2. 拖入源 PNG（推荐 1024×1024）
-3. 在侧边栏选择平台
-4. 按需调整选项（Android 文件名、图片集缩放等）
-5. 预览后导出 ZIP
-
-## 目录结构
-
-```
-src/           React 界面、预设、缩放、ZIP 导出
-src-tauri/     Tauri 壳
-docs/          GitHub Pages 落地页（中英）
-```
-
-技术栈：React 18 + TypeScript + Vite、Tauri 2、Canvas 缩放（pica）、JSZip。
 
 ## 参与贡献
 
-开发与 PR 约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。安全问题请看 [SECURITY.md](SECURITY.md)。
+想修 bug 或加功能？看 [CONTRIBUTING.md](CONTRIBUTING.md)。安全相关见 [SECURITY.md](SECURITY.md)。
 
-如果这个工具对你有用，点个 GitHub Star 能让更多人发现它。
+如果这个工具帮到你，点个 GitHub Star，能让更多人找到它。
 
 ## 许可证
 

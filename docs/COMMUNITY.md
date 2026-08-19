@@ -28,10 +28,10 @@ Use the **90/10 rule**: 90% helpful answers in the niche, 10% “I built this”
 
 | Place | How to engage |
 |---|---|
-| r/macapps | Answer Mac tooling questions; when relevant, link the local-first icon ZIP angle |
-| r/iOSProgramming | Help with Asset Catalog / App Icon questions; disclose authorship if linking the app |
-| r/androiddev | mipmap / launcher icon threads |
-| Show HN | Only with a real technical hook (Tauri + local export). See `launch` |
+| r/macapps | Answer Mac app questions helpfully; when relevant, mention a free icon-size exporter |
+| r/iOSProgramming | Help with App Icon size questions; disclose authorship if linking the app |
+| r/androiddev | Help with launcher icon size questions |
+| Show HN | Only with a real, useful hook for makers. See `launch` |
 | Product Hunt | Optional; needs polished GIF first (`visuals`) |
 
 ## awesome-* lists (honest PRs only)
@@ -41,7 +41,7 @@ Draft when the notarized macOS build is verified and README screenshots are fres
 - awesome-tauri (if list accepts apps)
 - awesome-mac (or similar Mac open-source lists)
 - awesome-react (only if the list wants desktop tools; skip if off-topic)
-- alternativeTo: “open-source alternative to web app-icon generators”
+- alternativeTo: free desktop alternative for multi-platform app icon export
 
 Do not spam 50 directories. One honest PR per relevant list.
 

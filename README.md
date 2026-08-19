@@ -2,79 +2,72 @@
 
 **One PNG in. Every icon size out.**
 
-Local desktop app for iOS, macOS, Android, Chrome, and more. Free, MIT, no uploads.
+Need app icons for iPhone, Android, Chrome, and more? Drop in one image, pick the platforms, export a zip. Free desktop app for Mac and Windows.
 
 [![Release](https://img.shields.io/github/v/release/EvilIrving/app-icon-sizes)](https://github.com/EvilIrving/app-icon-sizes/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **[Website](https://evilirving.github.io/app-icon-sizes/)** · **[Download](https://github.com/EvilIrving/app-icon-sizes/releases/latest)** · **[中文说明](README.zh-CN.md)** · **[中文站点](https://evilirving.github.io/app-icon-sizes/zh/)**
 
-<!-- Screenshot placeholder: replace en.png and add a short demo GIF before a public launch. -->
-![Icon Sizes UI (placeholder)](en.png)
+![Icon Sizes](en.png)
 
-## What it is
+## What is this?
 
-Icon Sizes is for indie and mobile developers who need Asset Catalog / mipmap-ready icon sets without sending artwork to a website. Drop in a 1024×1024 PNG, pick platforms, export one ZIP. Processing stays on your machine (Tauri desktop app).
+When you ship an app, every store and platform wants the same icon in many sizes. Icon Sizes does that for you.
 
-## Features
+1. Open the app
+2. Drop in your icon image (1024×1024 PNG works best)
+3. Tick the platforms you need
+4. Export one zip and you're done
 
-- **Local-first**: resize and ZIP export on-device; nothing is uploaded
-- **Apple presets**: iPhone, iPad, macOS, and watchOS app icon sizes
-- **Android**: mdpi through xxxhdpi launcher icons (`ic_launcher` or custom name)
-- **Image sets**: 1x/2x/3x or 1x/2x/3x/4x, with `Contents.json` for iOS asset catalogs
-- **Chrome extension**: 16 / 32 / 48 / 128
-- **Favicon and store images**: additional export modes in the app
-- **iOS Asset Catalog export**: App Icon / Image Set oriented output where configured
-- **EN / 中文 UI**
+It's free. Install once, use whenever.
+
+## What can it export?
+
+- iPhone / iPad / Mac app icons
+- Android launcher icons
+- Image sets (1x / 2x / 3x, and more)
+- Chrome extension icons
+- Website icons (favicon)
+- Store images
+
+The interface supports English and 中文.
 
 ## Install
 
-### Download (recommended)
+Get the latest version from [GitHub Releases](https://github.com/EvilIrving/app-icon-sizes/releases/latest):
 
-Grab the latest binary from [GitHub Releases](https://github.com/EvilIrving/app-icon-sizes/releases/latest):
-
-| Platform | Artifact |
+| Computer | File to download |
 |---|---|
-| macOS (Apple Silicon) | `.dmg` |
-| Windows | `.msi` or NSIS `.exe` |
+| Mac (Apple silicon) | `.dmg` |
+| Windows | `.msi` or `.exe` |
 
-> **macOS:** The DMG and bundled app are signed with Developer ID and notarized. CI validates their stapled tickets and Gatekeeper status before publishing.
-
-### Build from source
-
-Needs Node.js 18+, pnpm, Rust ([rustup](https://rustup.rs)), plus Xcode CLT (macOS) or VS Build Tools (Windows).
-
-```bash
-pnpm install
-pnpm tauri dev    # development
-pnpm tauri build  # production installers
-```
-
-Installers land under `src-tauri/target/release/bundle/`.
+On Mac, the app is signed and notarized by Apple, so you can open it like a normal app.
 
 ## How to use
 
-1. Open the app (dev build or release binary)
-2. Drop a source PNG (1024×1024 works best)
-3. Select platforms in the sidebar
-4. Adjust options (Android filename, image-set scale, and so on)
-5. Preview in the grid, then export a ZIP
+1. Download and install
+2. Open Icon Sizes
+3. Drop your PNG into the app
+4. Select platforms on the left
+5. Preview the sizes, then export the zip
 
-## Project layout
+## Build from source (optional)
 
+Most people can stop at the download above.
+
+If you want to build it yourself, you need Node.js 18+, pnpm, and Rust. On Mac also install Xcode Command Line Tools; on Windows install Visual Studio Build Tools. Steps are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+```bash
+pnpm install
+pnpm tauri build
 ```
-src/           React UI, presets, resize, ZIP export
-src-tauri/     Tauri shell
-docs/          GitHub Pages landing site (EN + 中文)
-```
-
-Stack: React 18 + TypeScript + Vite, Tauri 2, Canvas resize (pica), JSZip.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, PR expectations, and how to file bugs vs features. Security notes live in [SECURITY.md](SECURITY.md).
+Want to help fix a bug or add something? See [CONTRIBUTING.md](CONTRIBUTING.md). Security notes: [SECURITY.md](SECURITY.md).
 
-If Icon Sizes helps you ship, a GitHub star makes it easier for others to find.
+If this tool helps you, a GitHub star makes it easier for others to find.
 
 ## License
 
