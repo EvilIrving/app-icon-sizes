@@ -41,5 +41,4 @@ Use this on the landing hero, launch posts, and directory taglines unless a chan
 ## Unverified / do not claim
 
 - Exact “43 sizes” count (older README). Apple presets in code sum to **37** discrete size entries across iOS/iPadOS/macOS/watchOS; prefer “Apple presets” without a hard number unless recounted in UI.
-- Notarized / Gatekeeper-clean macOS until clean-download verification after Developer ID cert is in place.
 - Download counts, stars, “trusted by…”.

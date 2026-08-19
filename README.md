@@ -38,10 +38,7 @@ Grab the latest binary from [GitHub Releases](https://github.com/EvilIrving/app-
 | macOS (Apple Silicon) | `.dmg` |
 | Windows | `.msi` or NSIS `.exe` |
 
-> **macOS note (temporary):** Developer ID + notarization is prepared in CI but not verified on a clean Mac yet. If Gatekeeper blocks the app, clear quarantine once:
-> ```bash
-> xattr -rd com.apple.quarantine "/Applications/Icon Sizes.app"
-> ```
+> **macOS:** The DMG and bundled app are signed with Developer ID and notarized. CI validates their stapled tickets and Gatekeeper status before publishing.
 
 ### Build from source
 

@@ -8,7 +8,9 @@
 
 Tauri 构建会自动公证并 staple `.app`，但随后生成的 `.dmg` 只有 Developer ID 签名；仅验证 DMG 内的 app 会漏掉这一层。CI 必须在上传前额外对每个 DMG 执行 `notarytool submit --wait`、`stapler staple/validate` 和 `spctl --type open`。2026-08-20 首次从公开 Release 回下载验证时，正是靠 DMG 的 `spctl` 发现外层仍为 `Unnotarized Developer ID`。
 
-GitHub `APPLE` Environment 的六项发布 Secret 已于本次操作全部从这台 Mac 的有效凭证重新写入；仓库只记录 Secret 名称，不保存证书、私钥或密码。本条修正 2026-08-19 条目中“仍需创建 Developer ID 证书”以及旧签名身份的结论；是否完成 v1.1.2 发布以本次 CI 和最终 Gatekeeper 验证结果为准。
+GitHub `APPLE` Environment 的六项发布 Secret 已于本次操作全部从这台 Mac 的有效凭证重新写入；仓库只记录 Secret 名称，不保存证书、私钥或密码。本条修正 2026-08-19 条目中“仍需创建 Developer ID 证书”以及旧签名身份的结论。
+
+`v1.1.2` 已从提交 `5e5ee45` 发布，Actions run `32276593458` 全部成功。随后从公开 GitHub Release 重新下载 DMG 验证：DMG 与其中的 app 均通过 `stapler validate`，Gatekeeper 均返回 `accepted` / `Notarized Developer ID`，签名 TeamIdentifier 为 QZZ878S3NS；该 DMG 的 SHA-256 为 `dad871cff0f431824044ef4590ca4faf49692605b0fb404dfcd502e820b9a530`。
 
 ## docs/ 落地页去掉 AI 营销壳，改用真实应用截图 · 2026-08-19 17:58 · grok
 

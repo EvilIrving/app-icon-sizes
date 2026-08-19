@@ -38,10 +38,7 @@
 | macOS（Apple Silicon） | `.dmg` |
 | Windows | `.msi` 或 NSIS `.exe` |
 
-> **macOS 说明（临时）：** CI 已配置 Developer ID + 公证路径，但尚未在干净 Mac 上验证。若 Gatekeeper 拦截，可先清除隔离属性：
-> ```bash
-> xattr -rd com.apple.quarantine "/Applications/Icon Sizes.app"
-> ```
+> **macOS：** DMG 和其中的 App 均使用 Developer ID 签名并完成 Apple 公证；CI 会在发布前验证两层公证票据与 Gatekeeper 状态。
 
 ### 源码构建
 

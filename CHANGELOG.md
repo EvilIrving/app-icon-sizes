@@ -1,8 +1,8 @@
 # Changelog
 
-## [1.1.2] - Unreleased
+## [1.1.2] - 2026-08-20
 
-Release when macOS **Developer ID Application** signing + notarization is verified on a clean download (no Gatekeeper “unidentified developer” / quarantine workaround needed).
+macOS **Developer ID Application** signing and notarization are verified against the public Release DMG with Apple `stapler` and Gatekeeper `spctl`.
 
 ### Added
 - MIT `LICENSE` file
@@ -12,13 +12,9 @@ Release when macOS **Developer ID Application** signing + notarization is verifi
 - macOS `signingIdentity` switched from Apple Development to Developer ID Application (replace the Common Name if your certificate string differs)
 - README screenshot slots marked as placeholders until refreshed assets land
 
-### Notes for the release tag
-When ready:
-1. Confirm `security find-identity -v -p codesigning` shows a valid `Developer ID Application: …` identity
-2. Export that identity as p12 and update `APPLE_CERTIFICATE` / `APPLE_CERTIFICATE_PASSWORD` on the `APPLE` environment
-3. Align `bundle.macOS.signingIdentity` in `src-tauri/tauri.conf.json` with the exact certificate Common Name
-4. `git tag v1.1.2 && git push origin v1.1.2`
-5. Download the Release DMG on a clean Mac and open it without `xattr` workarounds
+### Verified
+- The public DMG and bundled app both carry valid stapled notarization tickets
+- Gatekeeper reports `accepted` with source `Notarized Developer ID`
 
 ## [1.1.1] - 2026-04-28
 
